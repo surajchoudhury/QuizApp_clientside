@@ -16,11 +16,13 @@ class ListQuizzes extends React.Component {
       <>
         {this.props.users ? (
           <div className="my_container2">
-            <div className="Tall-tile is-danger my_tall_tile">
+            <div className=" my_tall_tile">
               <Quizset quizzesbyQuizsets={this.props.quizzesbyQuizsets} />
             </div>
             <div>
               <Quiz
+                user={this.props.user}
+                currentUser={this.props.currentUser}
                 getQuizId={this.props.getQuizId}
                 updateState={this.props.updateState}
                 isAdmin={this.props.isAdmin}
@@ -37,7 +39,7 @@ class ListQuizzes extends React.Component {
             </div>
           </div>
         ) : (
-          ""
+          "Loading ...."
         )}
       </>
     );
@@ -46,7 +48,7 @@ class ListQuizzes extends React.Component {
 
 function mapStateTorops({ users }) {
   return {
-    users: users.users.users
+    users: users.users && users.users.users
   };
 }
 export default connect(mapStateTorops)(ListQuizzes);

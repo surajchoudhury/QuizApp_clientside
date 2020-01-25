@@ -11,6 +11,7 @@ import {
   fetchQuizsets
 } from "../actions";
 import Header from "../components/Header";
+import HomePage from "../components/HomePage";
 import NewQuiz from "./NewQuiz";
 import EditQuiz from "./EditQuiz";
 import Login from "./Login";
@@ -65,7 +66,7 @@ class Home extends React.Component {
       });
   }
 
-  updateState = () => {
+  updateState = topic => {
     this.props.dispatch(fetchQuizsets());
     fetch("http://localhost:3000/api/v1/quizzes", {
       headers: {
@@ -75,7 +76,7 @@ class Home extends React.Component {
       .then(res => res.json())
       .then(quizzes => {
         if (quizzes.success) {
-          this.setState({ quizzes });
+          this.setState({ quizzes }, () => this.quizzesbyQuizsets(topic));
         }
       });
   };
@@ -134,6 +135,9 @@ class Home extends React.Component {
             currentUser={this.currentLoggedUser}
           />
         </Route>
+        <Route exact path="/">
+          <HomePage />
+        </Route>
       </>
     );
   };
@@ -146,7 +150,8 @@ class Home extends React.Component {
         </Route>
         <Route exact path="/quizzes">
           <ListQuizzes
-           
+            user={this.state.loggedUser}
+            currentUser={this.currentLoggedUser}
             updateState={this.updateState}
             isAdmin={isAdmin}
             getQuizId={this.getQuizId}
@@ -164,6 +169,9 @@ class Home extends React.Component {
         <Route path="/quizzes/new">
           {isAdmin ? <NewQuiz updateState={this.updateState} /> : ""}
         </Route>
+        <Route exact path="/">
+          <HomePage />
+        </Route>
       </>
     );
   };
@@ -177,6 +185,7 @@ class Home extends React.Component {
     return (
       <>
         <Header isLoggedin={this.props.isLogged} isAdmin={isAdmin} />
+
         <Switch>
           {this.state.isLogged
             ? this.protectedRoutes(isAdmin)

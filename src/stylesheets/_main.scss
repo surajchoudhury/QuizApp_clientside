@@ -38,21 +38,24 @@ body {
   right: 1rem;
 }
 .my_tall_tile {
-  width: 15%;
-  text-align: center;
+  width: 20%;
 }
 .quizset {
   font-size: 1.1rem;
   font-weight: 600;
-  padding: 0.5rem;
+  padding: 0.3rem .7rem;
+  color: rgba($color: #000, $alpha: 0.5);
   cursor: pointer;
+  &:hover {
+    color: rgba($color: #000, $alpha: 1);
+  }
 }
 .center {
   width: 60rem;
   padding: 1rem;
   border-radius: 0.5rem;
   position: relative;
-  margin: .5rem 0;
+  margin: 0.5rem 0;
   border: 1px solid rgba($color: #000, $alpha: 0.2);
 }
 .delete_quiz {
@@ -80,6 +83,7 @@ body {
 .option {
   padding: 0.5rem 0;
   font-size: 0.9rem;
+  text-transform: capitalize;
   cursor: pointer;
   &:hover {
     color: rgba($color: #000000, $alpha: 1);
@@ -87,14 +91,16 @@ body {
 }
 .option-correct {
   border: 1px solid #66d2b3;
-  background-color: rgba($color: #66d2b3, $alpha: .8);
+  background-color: rgba($color: #66d2b3, $alpha: 0.8);
   color: #fff;
+  transition: all .3s;
   pointer-events: none;
 }
 .option-wrong {
   border: 1px solid red;
-  background-color: rgba($color: rgb(253, 0, 0), $alpha: .8);
+  background-color: rgba($color: rgb(253, 0, 0), $alpha: 0.8);
   color: #fff;
+  transition: all .3s;
   pointer-events: none;
 }
 .score_count {
@@ -105,8 +111,15 @@ body {
   font-weight: 200;
   z-index: 40;
 }
+.prev_score {
+  top: 1.6rem;
+  font-size: 1.2rem;
+  right: 13rem;
+}
+
 .my_tile {
   width: 30%;
+  background-color: #66d2b3;
 }
 .all_users_container {
   padding: 1rem;
@@ -124,4 +137,10 @@ body {
 .quiz_no {
   padding: 0.5rem 1rem;
 }
-
+center {
+  margin: 10rem auto;
+}
+.brain {
+  font-size: 5rem;
+  padding-bottom: 5rem;
+}

@@ -12,9 +12,10 @@ class Quiz extends React.Component {
       answer: null,
       scoreCount: 0
     };
+    this.view = React.createRef();
   }
 
-  deleteQuiz = id => {
+  deleteQuiz = (id,quizset) => {
     fetch(`http://localhost:3000/api/v1/quizzes/${id}`, {
       method: "DELETE",
       headers: {
@@ -25,7 +26,7 @@ class Quiz extends React.Component {
       .then(res => res.json())
       .then(quiz => {
         if (quiz.success) {
-          this.props.updateState();
+          this.props.updateState(quizset);
         }
       });
   };
@@ -45,7 +46,7 @@ class Quiz extends React.Component {
       .then(res => res.json())
       .then(user => {
         if (user.success) {
-          console.log(user);
+          this.props.currentUser();
         }
       });
   };
@@ -86,13 +87,16 @@ class Quiz extends React.Component {
       <>
         <section className="hero ">
           <div className="hero-body">
+            <p className="score_count prev_score">
+              Last Score : {this.props.user.user.score}
+            </p>
             <p className="score_count">Score : {this.state.scoreCount}</p>
             <form onSubmit={this.updateUserResult}>
-              <div className="container">
+              <div className="container" ref={this.view}>
                 {this.props.quizzes &&
                   this.props.quizzes.map((quiz, i) => (
                     <>
-                      <div data-id={++id} className="center" ref={this.view}>
+                      <div data-id={++id} className="center">
                         {this.props.isAdmin ? (
                           <>
                             <Link to="/quizzes/edit">
@@ -103,7 +107,7 @@ class Quiz extends React.Component {
                             </Link>
                             <TiDelete
                               className="delete_quiz"
-                              onClick={() => this.deleteQuiz(quiz._id)}
+                              onClick={() => this.deleteQuiz(quiz._id,quiz.quizset)}
                             />
                           </>
                         ) : null}
@@ -127,7 +131,9 @@ class Quiz extends React.Component {
                       </div>
                     </>
                   ))}
-                  <button className="button is-light" type="submit" >Submit</button>
+                <button className="button is-light" type="submit">
+                  Submit
+                </button>
               </div>
             </form>
           </div>

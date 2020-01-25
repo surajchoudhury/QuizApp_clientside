@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
+
 const Quizset = props => {
   return (
     <>
@@ -12,8 +13,9 @@ const Quizset = props => {
               onClick={() =>
                 props.quizzesbyQuizsets(set.topic ? set.topic : null)
               }
+             
             >
-              {set.topic ? set.topic : null}
+              {set.topic ? set.topic : null} 
             </li>
           ))}
       </ul>
