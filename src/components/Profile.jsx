@@ -15,6 +15,11 @@ const Profile = props => {
               <p className="subtitle">
                 {props.user.user.isAdmin ? "Admin" : "User"}
               </p>
+              {!props.user.user.isAdmin ? (
+                <Link to="/score">
+                  <p className="Profile_score">Score</p>
+                </Link>
+              ) : null}
               <Link to="/">
                 <p
                   className="title"

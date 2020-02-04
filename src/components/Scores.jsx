@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 const Score = props => {
   let sino = 0;
-  console.log(props.scores);
+  console.log(props.user);
   return (
     <>
       <section className="container scores_cont">
@@ -16,7 +16,13 @@ const Score = props => {
         </section>
         {props.scores &&
           props.scores.scores.map(score => (
-            <div className="main_container">
+            <div
+              className={
+                props.user && props.user.user.username === score.user.username
+                  ? "main_container username_score"
+                  : "main_container"
+              }
+            >
               <p className="si_no">{++sino}</p>
               <p className="quizset_name si">{score.quizset}</p>
               <p className="score_container">{score.score}</p>
@@ -30,7 +36,8 @@ const Score = props => {
 };
 const mapStateToProps = state => {
   return {
-    scores: state.users.scores
+    scores: state.users.scores,
+    user: state.users.user
   };
 };
 
