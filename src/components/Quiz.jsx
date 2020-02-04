@@ -1,7 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { TiDelete, TiEdit } from "react-icons/ti";
+import { fetchScores, fetchScore } from "../actions";
 
 class Quiz extends React.Component {
   constructor() {
@@ -15,7 +17,7 @@ class Quiz extends React.Component {
     this.view = React.createRef();
   }
 
-  deleteQuiz = (id,quizset) => {
+  deleteQuiz = (id, quizset) => {
     fetch(`http://localhost:3000/api/v1/quizzes/${id}`, {
       method: "DELETE",
       headers: {
@@ -31,6 +33,10 @@ class Quiz extends React.Component {
       });
   };
 
+  getScores = () => {
+    this.props.dispatch(fetchScores());
+  };
+
   updateUserResult = event => {
     event.preventDefault();
     fetch("http://localhost:3000/api/v1/user", {
@@ -40,13 +46,16 @@ class Quiz extends React.Component {
         authorization: localStorage.token
       },
       body: JSON.stringify({
-        score: this.state.scoreCount
+        score: this.state.scoreCount,
+        quizset: this.props.questions.questions[0].quizset
       })
     })
       .then(res => res.json())
       .then(user => {
         if (user.success) {
           this.props.currentUser();
+          this.props.dispatch(fetchScore());
+          this.props.history.push("/score");
         }
       });
   };
@@ -87,14 +96,17 @@ class Quiz extends React.Component {
       <>
         <section className="hero ">
           <div className="hero-body">
-            <p className="score_count prev_score">
-              Last Score : {this.props.user.user.score}
-            </p>
+            <Link to="/scores">
+              <p className="score_count prev_score" onClick={this.getScores}>
+                Score Board
+              </p>
+            </Link>
             <p className="score_count">Score : {this.state.scoreCount}</p>
             <form onSubmit={this.updateUserResult}>
               <div className="container" ref={this.view}>
-                {this.props.quizzes &&
-                  this.props.quizzes.map((quiz, i) => (
+                {this.props.questions &&
+                this.props.questions.questions.length ? (
+                  this.props.questions.questions.map((quiz, i) => (
                     <>
                       <div data-id={++id} className="center">
                         {this.props.isAdmin ? (
@@ -107,7 +119,9 @@ class Quiz extends React.Component {
                             </Link>
                             <TiDelete
                               className="delete_quiz"
-                              onClick={() => this.deleteQuiz(quiz._id,quiz.quizset)}
+                              onClick={() =>
+                                this.deleteQuiz(quiz._id, quiz.quizset)
+                              }
                             />
                           </>
                         ) : null}
@@ -115,25 +129,58 @@ class Quiz extends React.Component {
                           {quiz.question}
                         </h2>
                         <div className="options_container">
-                          {quiz.options.split(",").map(option => (
-                            <>
-                              <p
-                                className={"option"}
-                                onClick={event =>
-                                  this.getResult(event, quiz.answer, i)
-                                }
-                              >
-                                {option}
-                              </p>
-                            </>
-                          ))}
+                          <>
+                            <p
+                              className={"option"}
+                              onClick={event =>
+                                this.getResult(event, quiz.answer, i)
+                              }
+                            >
+                              {quiz.options.A}
+                            </p>
+                            <p
+                              className={"option"}
+                              onClick={event =>
+                                this.getResult(event, quiz.answer, i)
+                              }
+                            >
+                              {quiz.options.B}
+                            </p>
+                            <p
+                              className={"option"}
+                              onClick={event =>
+                                this.getResult(event, quiz.answer, i)
+                              }
+                            >
+                              {quiz.options.C}
+                            </p>
+                            <p
+                              className={"option"}
+                              onClick={event =>
+                                this.getResult(event, quiz.answer, i)
+                              }
+                            >
+                              {quiz.options.D}
+                            </p>
+                          </>
                         </div>
                       </div>
                     </>
-                  ))}
-                <button className="button is-light" type="submit">
-                  Submit
-                </button>
+                  ))
+                ) : (
+                  <p className="select-quiz">
+                    <span> 👈🏻 </span> Please select a quizset <span>👨🏼‍🏫 </span>
+                  </p>
+                )}
+                {this.props.questions &&
+                this.props.questions.questions.length &&
+                !this.props.isAdmin ? (
+                  // <Link to="/score">
+                  <button className="button is-light" type="submit">
+                    Submit
+                  </button>
+                ) : // </Link>
+                null}
               </div>
             </form>
           </div>
@@ -143,4 +190,10 @@ class Quiz extends React.Component {
   }
 }
 
-export default connect()(Quiz);
+function mapStateToProps({ quizzes }) {
+  return {
+    questions: quizzes.questions
+  };
+}
+
+export default connect(mapStateToProps)(withRouter(Quiz));

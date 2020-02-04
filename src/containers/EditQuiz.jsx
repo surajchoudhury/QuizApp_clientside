@@ -1,13 +1,18 @@
 import React from "react";
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 class EditQuiz extends React.Component {
   constructor() {
     super();
+
     this.state = {
       question: null,
       answer: null,
-      options: null,
+      A: null,
+      B: null,
+      C: null,
+      D: null,
       quizset: null
     };
   }
@@ -21,13 +26,16 @@ class EditQuiz extends React.Component {
       }
     })
       .then(res => res.json())
-      .then(quiz => {
-        if (quiz.success) {
+      .then(question => {
+        if (question.success) {
           this.setState({
-            question: quiz.quiz.question,
-            answer: quiz.quiz.answer,
-            options: quiz.quiz.options,
-            quizset: quiz.quiz.quizset
+            question: question.question.question,
+            answer: question.question.answer,
+            A: question.question.options.A,
+            B: question.question.options.B,
+            C: question.question.options.C,
+            D: question.question.options.D,
+            quizset: question.question.quizset
           });
         }
       });
@@ -48,14 +56,19 @@ class EditQuiz extends React.Component {
       body: JSON.stringify({
         question: this.state.question,
         answer: this.state.answer,
-        options: this.state.options,
+        options: {
+          A: this.state.A,
+          B: this.state.B,
+          C: this.state.C,
+          D: this.state.D
+        },
         quizset: this.state.quizset
       })
     })
       .then(res => res.json())
       .then(quiz => {
         if (quiz.success) {
-          this.props.updateState();
+          this.props.updateState(this.state.quizset);
           this.props.history.push("/quizzes");
         }
       });
@@ -72,7 +85,7 @@ class EditQuiz extends React.Component {
                 <textarea
                   class="textarea"
                   name="question"
-                  placeholder="Enter quiz name -- "
+                  placeholder="Enter Question -- "
                   onChange={this.onChange}
                   value={this.state.question}
                 ></textarea>
@@ -81,14 +94,38 @@ class EditQuiz extends React.Component {
             <div class="field">
               <label class="label">Options</label>
               <div class="control">
-                <textarea
-                  class="textarea  is-small is-primary"
+                <input
+                  class="input is-primary"
                   type="text"
-                  name="options"
+                  name="A"
                   onChange={this.onChange}
-                  value={this.state.options}
-                  placeholder="Options"
-                ></textarea>
+                  value={this.state.A}
+                  placeholder="A"
+                />
+                <input
+                  class="input is-primary"
+                  type="text"
+                  name="B"
+                  onChange={this.onChange}
+                  value={this.state.B}
+                  placeholder="B"
+                />
+                <input
+                  class="input is-primary"
+                  type="text"
+                  name="C"
+                  onChange={this.onChange}
+                  value={this.state.C}
+                  placeholder="C"
+                />
+                <input
+                  class="input is-primary"
+                  type="text"
+                  name="D"
+                  onChange={this.onChange}
+                  value={this.state.D}
+                  placeholder="D"
+                />
               </div>
             </div>
             <div class="field">
@@ -125,4 +162,10 @@ class EditQuiz extends React.Component {
   }
 }
 
-export default withRouter(EditQuiz);
+function mapStateToProps({ quizzes }) {
+  return {
+    question: quizzes.question && quizzes.question.question
+  };
+}
+
+export default connect(mapStateToProps)(withRouter(EditQuiz));

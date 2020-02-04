@@ -6,7 +6,7 @@ const publicHeader = () => {
     <>
       <div className="navbar-start">
         <Link className="navbar-item" to="/">
-          Home
+          QuizApp
         </Link>
       </div>
 
@@ -37,7 +37,7 @@ const protectedHeader = isAdmin => {
     <>
       <div className="navbar-start">
         <Link className="navbar-item" to="/">
-          Home
+        QuizApp
         </Link>
         {isAdmin ? (
           <Link className="navbar-item" to="/quizzes/new">

@@ -1,8 +1,15 @@
-import { SET_QUIZZES, SET_QUIZSETS } from "../types";
+import {
+  SET_QUIZZES,
+  SET_QUIZSETS,
+  SET_QUESTIONS,
+  SET_QUESTION
+} from "../types";
 
 let INITIAL_STATE = {
   quizzes: null,
-  quizsets: null
+  quizsets: null,
+  questions: null,
+  question: null
 };
 
 export default function Quizzes(state = INITIAL_STATE, action) {
@@ -16,6 +23,16 @@ export default function Quizzes(state = INITIAL_STATE, action) {
       return {
         ...state,
         quizsets: action.payload
+      };
+    case SET_QUESTIONS:
+      return {
+        ...state,
+        questions: action.payload
+      };
+    case SET_QUESTION:
+      return {
+        ...state,
+        question: action.payload
       };
     default:
       return state;

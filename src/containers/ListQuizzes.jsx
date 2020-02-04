@@ -17,16 +17,14 @@ class ListQuizzes extends React.Component {
         {this.props.users ? (
           <div className="my_container2">
             <div className=" my_tall_tile">
-              <Quizset quizzesbyQuizsets={this.props.quizzesbyQuizsets} />
+              <Quizset />
             </div>
             <div>
               <Quiz
-                user={this.props.user}
                 currentUser={this.props.currentUser}
                 getQuizId={this.props.getQuizId}
                 updateState={this.props.updateState}
                 isAdmin={this.props.isAdmin}
-                quizzes={this.props.quizzes}
               />
             </div>
             <div className="all_users_container">
@@ -39,7 +37,7 @@ class ListQuizzes extends React.Component {
             </div>
           </div>
         ) : (
-          "Loading ...."
+          <p className="loading">Loading....</p>
         )}
       </>
     );

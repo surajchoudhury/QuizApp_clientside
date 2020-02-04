@@ -1,4 +1,9 @@
 export const SET_QUIZZES = "SET_QUIZZES";
 export const SET_USERS = "SET_USERS";
+export const SET_USER = "SET_USER";
 export const SET_ADMINS = "SET_ADMINS";
 export const SET_QUIZSETS = "SET_QUIZSETS";
+export const SET_QUESTIONS = "SET_QUESTIONS";
+export const SET_QUESTION = "SET_QUESTION";
+export const SET_SCORES = "SET_SCORES";
+export const SET_SCORE = "SET_SCORE";

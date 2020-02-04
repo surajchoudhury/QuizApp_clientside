@@ -1,23 +1,20 @@
 import React from "react";
 import { connect } from "react-redux";
-
+import { fetchQuestions } from "../actions/index";
 
 const Quizset = props => {
   return (
     <>
-      <ul>
-        {props.quizsets &&
+      <ul className="quizset_container">
+        {props.quizsets ? 
           props.quizsets.map(set => (
             <li
               className="quizset"
-              onClick={() =>
-                props.quizzesbyQuizsets(set.topic ? set.topic : null)
-              }
-             
+              onClick={() => props.dispatch(fetchQuestions(set.topic))}
             >
-              {set.topic ? set.topic : null} 
+              {set.topic}
             </li>
-          ))}
+          )):<p className="loading_small">Loading...</p>}
       </ul>
     </>
   );
