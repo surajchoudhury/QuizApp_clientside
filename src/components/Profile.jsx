@@ -1,44 +1,136 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { AiOutlineLogout } from "react-icons/ai";
+import {
+  AiOutlineLogout,
+  AiOutlineMail,
+  AiOutlineFileImage,
+  AiOutlineUser
+} from "react-icons/ai";
+import Loader from "./Loader";
+import { FiClipboard } from "react-icons/fi";
+import { MdUpdate } from "react-icons/md";
+import { connect } from "react-redux";
+import { updateUser } from "../actions";
 
-const Profile = props => {
-  console.log(props.user && props.user.user);
-  return (
-    <>
-      {props.user ? (
-        <center>
-          <div className="my_tile">
-            <article className="tile is-child notification is-info">
-              <p className="title">{props.user.user.username}</p>
-              <p className="subtitle">{props.user.user.email}</p>
-              <p className="subtitle">
-                {props.user.user.isAdmin ? "Admin" : "User"}
-              </p>
-              {!props.user.user.isAdmin ? (
-                <Link to="/score">
-                  <p className="Profile_score">Score</p>
-                </Link>
-              ) : null}
-              <Link to="/">
-                <p
-                  className="title"
-                  onClick={() => {
-                    localStorage.clear();
-                    props.isLogged(false);
-                  }}
-                >
-                  <AiOutlineLogout />
-                </p>
+class Profile extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      username: null,
+      email: null,
+      profile: null
+    };
+  }
+
+  componentDidMount() {
+    fetch("http://localhost:3000/api/v1/user", {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: localStorage.token
+      }
+    })
+      .then(res => res.json())
+      .then(user => {
+        if (user.success) {
+          this.setState({
+            username: user.user.username,
+            email: user.user.email,
+            profile: user.user.profile
+          });
+        }
+      });
+  }
+
+  onChange = ({ target: { name, value } }) => {
+    this.setState({ [name]: value });
+  };
+
+  updateUser = () => {
+    this.props.dispatch(
+      updateUser(this.state.username, this.state.email, this.state.profile)
+    );
+  };
+  render() {
+    return (
+      <>
+        {this.props.user ? (
+          <div className="profile_container">
+            <form className="form_profile">
+              <div className="profile_name_pic">
+                <figure className="profile_pic">
+                  <img
+                    className="profile_img"
+                    src={this.state.profile}
+                    alt=""
+                    srcset=""
+                  />
+                </figure>
+                <input
+                  onChange={this.onChange}
+                  className="input_username"
+                  name="username"
+                  value={this.state.username}
+                />
+              </div>
+              <AiOutlineUser className="icon_profile1" />
+              <span className="profile_user_admin">
+                {this.props.user.isAdmin ? "Admin" : "User"}
+              </span>
+              <div className="icon_input_container">
+                <AiOutlineFileImage className="icon_profile" />
+                <input
+                  onChange={this.onChange}
+                  className="input_profilepic input_profile_"
+                  value={this.state.profile}
+                  name="profile"
+                  placeholder="Add a profile pic"
+                />
+              </div>
+
+              <div className="icon_input_container">
+                <AiOutlineMail className="icon_profile" />
+                <input
+                  onChange={this.onChange}
+                  className="input_profile input_profile_"
+                  name="email"
+                  value={this.state.email}
+                />
+              </div>
+            </form>
+
+            {!this.props.user.isAdmin ? (
+              <Link to="/score" className="score_link">
+                <FiClipboard className="icon_profile1"/>
+                <span className="Profile_score">Score</span>
               </Link>
-            </article>
+            ) : null}
+            <p onClick={this.updateUser} className="update_user">
+              <MdUpdate  />
+            </p>
+            <Link to="/">
+              <p
+                className="logout"
+                onClick={() => {
+                  localStorage.clear();
+                  this.props.isLogged(false);
+                }}
+              >
+                <AiOutlineLogout />
+              </p>
+            </Link>
           </div>
-        </center>
-      ) : (
-        <p className="loading">Loading....</p>
-      )}
-    </>
-  );
-};
+        ) : (
+          <Loader />
+        )}
+      </>
+    );
+  }
+}
 
-export default Profile;
+function mapStateToProps({ users }) {
+  return {
+    user: users.user && users.user.user
+  };
+}
+
+export default connect(mapStateToProps)(Profile);

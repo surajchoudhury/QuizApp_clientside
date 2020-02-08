@@ -1,0 +1,23 @@
+.header {
+  width: 100%;
+  position: absolute;
+  box-shadow: -1px -2px 14px -4px rgba(#905ce3,0.4);
+  padding: .8rem 0;
+  background-color: #fff;
+  bottom: 0;
+}
+.header_items {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.header_item {
+  font-size: 1.3rem;
+  color: rgba(0,0,0,0.5);
+  font-weight: 700;
+}
+.header_item_active {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #7236d3;
+}

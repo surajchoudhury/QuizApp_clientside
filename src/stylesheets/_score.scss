@@ -1,0 +1,174 @@
+.score_card_container {
+  padding: 2rem;
+  height: 100vh;
+  background-image: url("../images/inspiration-geometry.png");
+  background-color: #9A61E0;
+}
+.started {
+  background-color: #6D62FC;
+} 
+.score_figure {
+  width: 100%;
+  margin: 2rem 0;
+}
+.congo {
+  text-align: center;
+  color: rgba(255,255,255,1);
+  font-size: 1.8rem;
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  margin: 1rem 0;
+}
+.completed_score {
+  text-align: center;
+color: rgba(255,255,255,.8);
+  font-size: .9rem;
+  font-weight: 500;
+}
+.model_name {
+  font-size: 1.2rem;
+  text-align: center;
+  padding: .5rem;
+  color: #fff;
+  font-weight: 600;
+}
+.score_scorecard {
+  text-align: center;
+  width: 5rem;
+  margin: 1rem auto;
+  border-radius: 24px;
+  font-size: .9rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: rgba(255,255,255,.2);
+  padding: .5rem;
+  border: 1px solid rgba(255,255,255,.1);
+}
+.button_scorecard {
+  background-color: #fff;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color:rgba(0,0,0,.7);
+  &:hover {
+    color: rgba(0,0,0,1);
+  }
+}
+.scorecard_buttons_container {
+  margin-top: 4rem;
+}
+
+//scores
+
+.scores_container {
+  width: 100%;
+  text-align: center;
+  padding: 1rem;
+  background-image: url("../images/inspiration-geometry.png");
+
+  
+}
+.scores_container_small {
+  display: grid;
+ grid-template-columns: 1fr 3fr 1fr 2fr;
+}
+
+.all_score_container {
+  height: 51vh;
+  margin: .5rem 0;
+  overflow: auto;
+}
+
+.all_score_container::-webkit-scrollbar {
+  display: none;
+}
+.all_score_container2 {
+  overflow: auto;
+  height:43vh;
+}
+.scores {
+  font-size: .9rem;
+  color: rgba(0,0,0,.7);
+  font-weight: 600;
+}
+.player {
+  padding-left: 1rem;
+text-align: left;
+}
+.scores_fig {
+  width: 30%;
+  margin:1rem  auto;
+}
+.win_img {
+  width: 100%;
+}
+.main_container {
+  padding: .5rem;
+  width: 100%;
+  display: grid;
+  align-items: center;
+  justify-content: space-between;
+  margin: .5rem 0;
+  color: #9A61E0;
+  background-color: #F7F6F9;
+  grid-template-columns: 1fr 3fr 1fr 2fr;
+  font-weight: 600;
+}
+.username_score {
+  background-color: #9A61E0;
+  color:#fff;
+}
+.rank,.username_scores,.quizset_scores,.score_scores {
+font-size: .9rem;
+font-weight: 500;
+}
+.rank {
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 50%;
+  display: flex;
+  font-weight: 600;
+  align-items: center;
+  justify-content: center;
+  background-color: #9A61E0;
+  color: #fff;
+}
+.my_rank {
+  background-color:#fff;
+  color: #9A61E0;
+}
+.score_img_user {
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: .3rem;
+  background-image: url("../images/man.png");
+  background-position: center;
+  background-size: cover;
+}
+.username_cont_score {
+  display: flex;
+  align-items: center;
+}
+
+// score 
+
+.score_fig {
+  width: 60%;
+  margin: auto;
+  margin-bottom: 2rem;
+}
+.scores_container_small2 {
+  color: #9A61E0;
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr 3fr;
+}
+.main_container2 {
+  background-color: #efe5fd;
+  color: rgba(0,0,0,.8);
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr 3fr;
+}
+.date_score {
+  font-size: .8rem;
+}

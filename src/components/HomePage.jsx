@@ -4,14 +4,27 @@ import { Link } from "react-router-dom";
 const HomePage = () => {
   return (
     <>
-      <div>
-        <center>
-          <span className="brain">🧠</span>
-          <p className="title">Take your Quiz!</p>
-          <Link to={localStorage.token ? "/quizzes" : "/users/login"}>
-            <button className="button is-success">GET STARTED</button>
-          </Link>
-        </center>
+      <div className="homepage">
+        <span className="brain">🧠</span>
+        <figure>
+          {localStorage.token ? (
+            <img src="/images/question.svg" alt="" srcset="" />
+          ) : (
+            <img src="/images/homepage.svg" alt="" srcset="" />
+          )}
+        </figure>
+        <p className="title">Take your Quiz!</p>
+        <Link to={localStorage.token ? "/quizsets" : "/users/login"}>
+          {localStorage.token ? (
+            <button className="button_signin started is-success">
+              GET STARTED
+            </button>
+          ) : (
+            <button className="button_signup started is-success">
+              GET STARTED
+            </button>
+          )}
+        </Link>
       </div>
     </>
   );

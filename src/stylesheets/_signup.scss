@@ -1,0 +1,95 @@
+.signup_container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  margin: auto;
+}
+.arrow_container {
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.back_arrow {
+  left: 1rem;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  height: 2.2rem;
+  width: 2.2rem;
+  color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  transition: all 0.3s;
+  position: absolute;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0px 0px 13px 1px rgba(#905ce3, 0.15);
+  }
+}
+
+.signup {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.5);
+  font-family: 'Raleway', sans-serif;
+}
+.progress_container {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  height: 0.25rem;
+}
+.progress {
+  height: 0.25rem;
+  width: 0;
+  transition: all .7s;
+  background-color: #905ce3;
+}
+.progress1 {
+  width: 35%;
+}
+.progress2 {
+  width: 70%;
+}
+.progress3 {
+  width: 100%;
+}
+.introduce_signup {
+  padding: 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.5);
+}
+.enter_details {
+  padding: 0 1rem;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: .75rem;
+}
+.signup_form {
+  width: 75%;
+  // padding: 5rem 0 1rem 0;
+  margin: auto;
+}
+.button_signup {
+  position: absolute;
+  width: 100%;
+  padding: 1rem;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  background-color: #905ce3;
+  color: #fff;
+  box-shadow: 0px 0px 13px 1px rgba(#905ce3, 0.15);
+  outline: none;
+}
+.singup_img {
+  width: 50%;
+  margin: 1rem auto;
+}

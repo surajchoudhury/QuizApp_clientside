@@ -1,5 +1,6 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
+// import { MdArrowBack } from "react-icons/md";
 
 class Signup extends React.Component {
   constructor() {
@@ -8,6 +9,7 @@ class Signup extends React.Component {
       username: null,
       email: null,
       password: null,
+      progress: null,
       errors: {
         invalidUsername: null,
         invalidEmail: null,
@@ -17,7 +19,7 @@ class Signup extends React.Component {
   }
 
   handleChange = ({ target: { name, value } }) => {
-    this.setState({ [name]: value });
+    this.setState({ [name]: value }, () => this.checkProgress());
   };
 
   errorHandler = event => {
@@ -73,6 +75,8 @@ class Signup extends React.Component {
         invalidUsername: "Username can't be empty!",
         invalidPassword: "Password can't be empty!"
       });
+    } else if (!this.state.email.includes(".com")) {
+      this.setState({ invalidEmail: "Invalid email format" });
     } else {
       this.newUser();
     }
@@ -97,97 +101,104 @@ class Signup extends React.Component {
         }
       });
   };
+
+  checkProgress = () => {
+    if (this.state.username && !this.state.email && !this.state.password) {
+      return "progress progress1";
+    } else if (
+      this.state.username &&
+      this.state.email &&
+      !this.state.password
+    ) {
+      return "progress progress2";
+    } else if (this.state.username && this.state.email && this.state.password) {
+      return "progress progress3";
+    } else {
+      return "progress";
+    }
+  };
+
   render() {
     return (
       <>
-        <div className="container my_container">
-          <form onSubmit={this.errorHandler}>
-            <div className="field">
-              <label className="label">Username</label>
-              <div className="control has-icons-left has-icons-right">
-                <input
-                  className={
-                    !this.state.username && this.state.invalidUsername
-                      ? "input is-danger"
-                      : "input is-success"
-                  }
-                  type="text"
-                  name="username"
-                  placeholder="Enter your username"
-                  value={this.state.username}
-                  onChange={this.handleChange}
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-user"></i>
-                </span>
-                <span className="icon is-small is-right">
-                  <i className="fas fa-check"></i>
-                </span>
-              </div>
-              <p className="help is-danger">
+        <div className="signup_container">
+          <div className="arrow_container">
+            <Link to="/users/login" className="back_arrow">
+              <p>←</p>
+            </Link>
+            <p className="signup">Sign Up</p>
+          </div>
+          <div className="progress_container">
+            <span className={this.checkProgress()}></span>
+          </div>
+          <p className="introduce_signup">Introduce Yourself</p>
+          <p className="enter_details">Enter username,email and password</p>
+          <figure className="singup_img">
+            <img src="/images/signup.svg" alt="" srcset="" />
+          </figure>
+          <form onSubmit={this.errorHandler} className="signup_form">
+            <label className="label_email ">Username</label>
+            <label className="incorrect_container">
+              <p className="label_incorrect is-danger">
                 {!this.state.username ? this.state.invalidUsername : ""}
               </p>
-            </div>
+            </label>
+            <input
+              className={
+                !this.state.username && this.state.invalidUsername
+                  ? "input_signin is-false"
+                  : "input_signin is-success"
+              }
+              type="text"
+              name="username"
+              placeholder="Enter your username"
+              value={this.state.username}
+              onChange={this.handleChange}
+            />
 
-            <div className="field">
-              <label className="label">Email</label>
-              <div className="control has-icons-left has-icons-right">
-                <input
-                  className={
-                    !this.state.email && this.state.invalidEmail
-                      ? "input is-danger"
-                      : "input is-success"
-                  }
-                  type="email"
-                  name="email"
-                  placeholder="Enter your email"
-                  value={this.state.email}
-                  onChange={this.handleChange}
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-envelope"></i>
-                </span>
-                <span className="icon is-small is-right">
-                  <i className="fas fa-exclamation-triangle"></i>
-                </span>
-              </div>
-              <p className="help is-danger">
-                {!this.state.email ? this.state.invalidEmail : ""}
+            <label className="label_email">Email</label>
+            <label className="incorrect_container">
+              <p className="label_incorrect is-danger">
+                {!this.state.email || !this.state.email.includes(".com")
+                  ? this.state.invalidEmail
+                  : ""}
               </p>
-            </div>
-            <div className="field">
-              <label className="label">Password</label>
-              <div className="control has-icons-left has-icons-right">
-                <input
-                  className={
-                    !this.state.password && this.state.invalidPassword
-                      ? "input is-danger"
-                      : "input is-success"
-                  }
-                  type="password"
-                  name="password"
-                  placeholder="Enter your password"
-                  value={this.state.password}
-                  onChange={this.handleChange}
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-envelope"></i>
-                </span>
-                <span className="icon is-small is-right">
-                  <i className="fas fa-exclamation-triangle"></i>
-                </span>
-              </div>
-              <p className="help is-danger">
+            </label>
+            <input
+              className={
+                !this.state.email && this.state.invalidEmail
+                  ? "input_signin is-false"
+                  : "input_signin is-success"
+              }
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              value={this.state.email}
+              onChange={this.handleChange}
+            />
+
+            <label className="label_email">Password</label>
+            <label className="incorrect_container">
+              <p className="label_incorrect is-danger">
                 {!this.state.password ? this.state.invalidPassword : ""}{" "}
               </p>
-            </div>
-            <div className="field">
-              <p className="control">
-                <button className="button is-success" type="submit">
-                  Signup
-                </button>
-              </p>
-            </div>
+            </label>
+            <input
+              className={
+                !this.state.password && this.state.invalidPassword
+                  ? "input_signin is-false"
+                  : "input_signin is-success"
+              }
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              value={this.state.password}
+              onChange={this.handleChange}
+            />
+
+            <button className="button_signup is-success" type="submit">
+              Continue
+            </button>
           </form>
         </div>
       </>

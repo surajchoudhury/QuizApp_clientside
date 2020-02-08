@@ -1,20 +1,24 @@
 import React from "react";
 import { connect } from "react-redux";
+import Loader from "./Loader";
 
 const Score = props => {
   let sino = 0;
-  console.log(props.user);
+
   return (
     <>
-      <section className="container scores_cont">
-        <section className="scores_container">
-          <p className="scores">SI.NO</p>
+      <section className=" scores_container">
+        <figure className="scores_fig">
+          <img className="win_img" src="/images/win.png" alt="" srcset="" />
+        </figure>
+        <section className="scores_container_small">
+          <p className="scores">Rank</p>
+          <p className="scores player">Player</p>
+          <p className="scores score">Scores</p>
           <p className="scores">Quizset</p>
-          <p className="scores score">Top scores</p>
-          <p className="scores">Scored by</p>
-          <p className="scores">Created At</p>
         </section>
-        {props.scores &&
+        <div className="all_score_container">
+        {props.scores && props.user ? (
           props.scores.scores.map(score => (
             <div
               className={
@@ -23,13 +27,26 @@ const Score = props => {
                   : "main_container"
               }
             >
-              <p className="si_no">{++sino}</p>
-              <p className="quizset_name si">{score.quizset}</p>
-              <p className="score_container">{score.score}</p>
-              <p className="si_no">{score.user.username}</p>
-              <p className="created_at">{score.createdAt}</p>
+              <p className= {props.user && props.user.user.username === score.user.username
+                  ? "rank my_rank"
+                  : "rank"}
+              >{++sino}</p>
+              <p className="username_cont_score">
+                <figure className="score_img_user">
+                  <img src={score.user.profile} alt="" srcset="" />
+                </figure>
+                <p className="username_scores">{score.user.username}</p>
+              </p>
+
+              <p className="score_scores">{score.score}</p>
+              <p className="quizset_scores">{score.quizset}</p>
             </div>
-          ))}
+          ))
+        ) : (
+          <Loader />
+        )}
+        </div>
+       
       </section>
     </>
   );

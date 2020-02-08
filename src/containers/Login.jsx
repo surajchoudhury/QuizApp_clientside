@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 
 class Login extends React.Component {
   constructor() {
@@ -7,6 +7,7 @@ class Login extends React.Component {
     this.state = {
       email: null,
       password: null,
+      message: null,
       errors: {
         invalidUsername: null,
         invalidEmail: null,
@@ -53,6 +54,8 @@ class Login extends React.Component {
           this.props.isLogged(true);
           this.props.currentUser();
           this.props.history.push("/");
+        } else {
+          this.setState({ message: user.message });
         }
       });
   };
@@ -60,63 +63,64 @@ class Login extends React.Component {
   render() {
     return (
       <>
-        <div className="container my_container">
-          <form onSubmit={this.errorHandler}>
-            <div className="field">
-              <label className="label">{this.props.text}</label>
-              <label className="label">Email</label>{" "}
-              <div className="control has-icons-left has-icons-right">
-                <input
-                  className={
-                    !this.state.email && this.state.invalidEmail
-                      ? "input is-danger"
-                      : "input is-success"
-                  }
-                  type="email"
-                  name="email"
-                  value={this.state.email}
-                  onChange={this.handleChange}
-                  placeholder="Enter your email"
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-envelope"></i>
-                </span>
-                <span className="icon is-small is-right">
-                  <i className="fas fa-exclamation-triangle"></i>
-                </span>
-              </div>
-              <p className="help is-danger">
+        <div className="signin_container">
+        <Link to="/admins/login" className="admin_link">○</Link>
+          <figure className="signin_fig_container">
+            <img src="/images/signin.svg" alt="" srcset="" />
+          </figure>
+          <p className="Quizapp">Quiz App</p>
+          <p className="login_user ">{this.props.text}</p>
+          <form onSubmit={this.errorHandler} className="signin_form">
+            <label className="label_invalid is-danger">{this.state.message}</label>{" "}
+          
+            <label className="label_email ">Email</label>{" "}
+            <label className="incorrect_container">
+              <label className="label_incorrect is-danger">
                 {!this.state.email ? this.state.invalidEmail : ""}
-              </p>
-            </div>
-            <div className="field">
-              <label className="label">Password</label>
-              <div className="control has-icons-left has-icons-right">
-                <input
-                  className={
-                    !this.state.password && this.state.invalidPassword
-                      ? "input is-danger"
-                      : "input is-success"
-                  }
-                  type="password"
-                  name="password"
-                  value={this.state.password}
-                  placeholder="Enter your password"
-                  onChange={this.handleChange}
-                />
-              </div>
-              <p className="help is-danger">
-                {!this.state.password ? this.state.invalidPassword : ""}{" "}
-              </p>
-            </div>
-            <div className="field">
-              <p className="control">
-                <button className="button is-success" type="submit">
-                  Login
-                </button>
-              </p>
-            </div>
+              </label>
+            </label>
+            <input
+              className={
+                !this.state.email && this.state.invalidEmail
+                  ? "input_signin is-false"
+                  : "input_signin is-success"
+              }
+              type="email"
+              name="email"
+              value={this.state.email}
+              onChange={this.handleChange}
+              placeholder="Enter your email"
+            />
+            <label className="label_password ">Password</label>
+            <label className="incorrect_container">
+              <label className="label_incorrect is-danger">
+                {!this.state.password ? this.state.invalidPassword : ""}
+              </label>
+            </label>
+            <input
+              className={
+                !this.state.password && this.state.invalidPassword
+                  ? "input_signin is-false"
+                  : "input_signin is-success"
+              }
+              type="password"
+              name="password"
+              value={this.state.password}
+              placeholder="Enter your password"
+              onChange={this.handleChange}
+            />
+            <p className="control ">
+              <button className="button_signin is-success" type="submit">
+                Sign in
+              </button>
+            </p>
           </form>
+          <p className="register_here">
+            Dont have an account?{" "}
+            <Link to="/users/new">
+              <small className="register_now">Register now</small>
+            </Link>
+          </p>
         </div>
       </>
     );

@@ -1,0 +1,170 @@
+.quizsets_container {
+  height: 100vh;
+}
+.quizsets_container_small {
+  padding: 1rem;
+  overflow-y: scroll;
+  background-color: rgb(244, 243, 247);
+  height: 68vh;
+}
+.quizsets_container_small::-webkit-scrollbar {
+  display: none;
+}
+.quizset_container {
+  width: 100%;
+}
+.quizset {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+  border-radius: 8px;
+  background-color: #905ce3;
+  background-image: url("../images/inspiration-geometry.png");
+  background-size: cover;
+  padding: 1rem;
+}
+.quizset_content {
+  width: 60%;
+  position: relative;
+  color: #fff;
+}
+.quizset_no {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.5rem;
+  height: 3rem;
+  width: 3rem;
+  margin: 0 4rem 0 0.5rem;
+  background-color: #fff;
+  color: #905ce3;
+  border-radius: 50%;
+}
+.quiz_count_container {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  width: 100%;
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+}
+.quizset_name {
+  font-size: 1.3rem;
+  display: block;
+  padding-bottom: 0.5rem;
+  font-weight: 600;
+}
+.quiz_count {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+}
+.quiz_logo {
+  font-size: 1rem;
+  margin-right: 0.5rem;
+}
+.play_button {
+  font-size: 1.5rem;
+  margin-left: 3rem;
+  color: rgba(255, 255, 255, 0.5);
+  transition: all 0.3s;
+  &:hover {
+    color: #fff;
+    transform: scale(1.1);
+  }
+}
+
+//create quizet
+
+.quizset_form {
+  display: flex;
+  align-items: center;
+}
+.add_question_link {
+  color:rgba(255, 255, 255, 0.5);
+  &:hover {
+    color: #fff;
+  }
+}
+.add_quizset {
+  color: #905ce3;
+  font-size: 1.5rem;
+  padding-right: 1rem;
+}
+.create_quizset {
+  padding: 0.5rem;
+  border: none;
+  border-bottom: 1px solid transparent;
+  font-size: 0.9rem;
+  background-color: transparent;
+  outline: none;
+  &:focus {
+    border-bottom: 1px solid #905ce3;
+  }
+}
+
+.edit_quizset_container {
+  position: absolute;
+  top: 0;
+  display: flex;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  width: 5rem;
+  color: rgba(255, 255, 255, 0.5);
+  transition: letter-spacing .5s;
+  cursor: pointer;
+  &:hover {
+    letter-spacing: .4rem;
+    color: #fff;
+    .add_question {
+      z-index: 1;
+      right: -.5rem;
+    }
+    .delete_quizset {
+      z-index: 1;
+      right: 4rem;
+    }
+  }
+}
+.add_question {
+  font-size: 1.4rem;
+  right: 0;
+  top: 0.3rem;
+  z-index: -1;
+  transition: all .3s;
+  position: absolute;
+  color: rgba(255, 255, 255, 0.5);
+  &:hover {
+    color: #fff;
+  }
+}
+.delete_quizset {
+  font-size: 1.4rem;
+  z-index: -1;
+  top: 0.3rem;
+  right: 0;
+  transition: all .3s;
+  color: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  &:hover {
+    color: #fff;
+  }
+}
+
+.quizset_no_edit {
+  padding: 0;
+  margin: 0 1.5rem 0 0;
+}
+.edit_quizset_container_edit {
+  right: -3.5rem;
+}
+.play_botton_edit {
+  position: absolute;
+  left: 9.5rem;
+}

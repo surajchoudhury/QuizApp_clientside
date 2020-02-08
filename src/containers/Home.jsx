@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 // relative imports
@@ -19,11 +19,14 @@ import Header from "../components/Header";
 import HomePage from "../components/HomePage";
 import NewQuiz from "./NewQuiz";
 import EditQuiz from "./EditQuiz";
+import Quizset from "../components/Quizset";
 import Login from "./Login";
 import Signup from "./Signup";
 import Profile from "../components/Profile";
 import Scores from "../components/Scores";
 import Score from "../components/Score";
+import PlayQuiz from "./PlayQuiz";
+import ScoreCard from "../components/ScoreCard";
 import ListQuizzes from "./ListQuizzes";
 
 class Home extends React.Component {
@@ -33,8 +36,7 @@ class Home extends React.Component {
       quizId: null,
       loggedUser: null,
       isLogged: false,
-      quizzes: null,
-      // quizsets: null
+      quizzes: null
     };
   }
 
@@ -74,7 +76,7 @@ class Home extends React.Component {
         </Route>
         <Route path="/users/login">
           <Login
-            text="Users Login"
+            text="User"
             URL={"http://localhost:3000/api/v1/users/login"}
             isLogged={this.handleLogin}
             currentUser={this.currentLoggedUser}
@@ -82,7 +84,7 @@ class Home extends React.Component {
         </Route>
         <Route path="/admins/login">
           <Login
-            text="Admins Login"
+            text="Admin"
             URL={"http://localhost:3000/api/v1/admins/login"}
             isLogged={this.handleLogin}
             currentUser={this.currentLoggedUser}
@@ -99,31 +101,52 @@ class Home extends React.Component {
     return (
       <>
         <Route path="/user">
-          <Profile user={this.props.user} isLogged={this.handleLogin} />
+          <>
+            <Profile user={this.props.user} isLogged={this.handleLogin} />
+            <Header isLoggedin={this.props.isLogged} isAdmin={isAdmin} />
+          </>
         </Route>
-        <Route exact path="/quizzes">
-          <ListQuizzes
-            user={this.props.user}
-            currentUser={this.currentLoggedUser}
-            updateState={this.updateState}
-            isAdmin={isAdmin}
-            getQuizId={this.getQuizId}
-          />
+
+        <Route exact path="/questions">
+          <PlayQuiz isAdmin={isAdmin} />
+        </Route>
+
+        <Route path="/questions/scorecard">
+          <ScoreCard />
+        </Route>
+        <Route path="/quizzes/view">
+          <ListQuizzes isAdmin={isAdmin} />
+          <Header isLoggedin={this.props.isLogged} isAdmin={isAdmin} />
         </Route>
         <Route exact path="/quizzes/edit">
           <EditQuiz quizId={this.state.quizId} updateState={this.updateState} />
         </Route>
-        <Route path="/quizzes/new">
-          {isAdmin ? <NewQuiz updateState={this.updateState} /> : null}
+
+        <Route path="/quizsets">
+          <>
+            <Quizset isAdmin={isAdmin} />
+            <Header isLoggedin={this.props.isLogged} isAdmin={isAdmin} />
+          </>
         </Route>
+        <Route path="/quizzes/new">{isAdmin ? <NewQuiz /> : null}</Route>
         <Route path="/scores">
-          <Scores />
+          <>
+            <Scores />
+            <Header isLoggedin={this.props.isLogged} isAdmin={isAdmin} />
+          </>
         </Route>
         <Route path="/score">
-          <Score />
+          <>
+            <Score />
+            <Header isLoggedin={this.props.isLogged} isAdmin={isAdmin} />
+          </>
         </Route>
+
         <Route exact path="/">
-          <HomePage />
+          <>
+            <HomePage />
+            <Header isLoggedin={this.props.isLogged} isAdmin={isAdmin} />
+          </>
         </Route>
       </>
     );
@@ -137,13 +160,14 @@ class Home extends React.Component {
 
     return (
       <>
-        <Header isLoggedin={this.props.isLogged} isAdmin={isAdmin} />
-
-        <Switch>
-          {this.state.isLogged
-            ? this.protectedRoutes(isAdmin)
-            : this.publicRoutes()}
-        </Switch>
+        <main className="main">
+         
+          <Switch>
+            {this.state.isLogged
+              ? this.protectedRoutes(isAdmin)
+              : this.publicRoutes()}
+          </Switch>
+        </main>
       </>
     );
   }
