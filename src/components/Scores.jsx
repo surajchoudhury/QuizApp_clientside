@@ -14,7 +14,7 @@ const Score = props => {
         <section className="scores_container_small">
           <p className="scores">Rank</p>
           <p className="scores player">Player</p>
-          <p className="scores score">Scores</p>
+          <p className="scores score">Score</p>
           <p className="scores">Quizset</p>
         </section>
         <div className="all_score_container">

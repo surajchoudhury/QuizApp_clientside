@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
-import { getScoreTopic, updateScore } from "../actions";
+import { getScoreTopic, updateScore, completedByUsers } from "../actions";
 
 class PlayQuiz extends React.Component {
   constructor() {
@@ -34,14 +34,24 @@ class PlayQuiz extends React.Component {
       this.setState({ activeOption: option, selected: true });
     }
   };
+  submitAnswer = (score, topic) => {
+    this.props.dispatch(
+      getScoreTopic({
+        score,
+        topic
+      })
+    );
+    this.props.dispatch(updateScore(score, topic));
+    if (!this.props.quizset.completedByUsers.includes(this.props.user._id)) {
+      this.props.dispatch(completedByUsers(topic));
+    }
+  };
 
   render() {
-    console.log(this.props.isAdmin);
     let questionSet =
       this.props.quizset &&
       this.props.quizset.questions.length &&
       this.props.quizset.questions[this.state.activeIndex];
-    console.log(questionSet, "bfjvbkjbjkjvbkjvjkfkfbkbfkb");
     return (
       <>
         {this.props.quizset ? (
@@ -143,17 +153,9 @@ class PlayQuiz extends React.Component {
               <Link to="/questions/scorecard">
                 <button
                   className="button_signup is-success"
-                  onClick={() => {
-                    this.props.dispatch(
-                      getScoreTopic({
-                        score: this.score,
-                        topic: questionSet.quizset
-                      })
-                    );
-                    this.props.dispatch(
-                      updateScore(this.score, questionSet.quizset)
-                    );
-                  }}
+                  onClick={() =>
+                    this.submitAnswer(this.score, questionSet.quizset)
+                  }
                 >
                   Submit
                 </button>
@@ -169,7 +171,9 @@ class PlayQuiz extends React.Component {
                     Next
                   </button>
                 ) : (
-                  <button className="button_signup is-success">Admin can't Play</button>
+                  <button className="button_signup is-success">
+                    Admin can't Play
+                  </button>
                 )}
               </>
             )}
@@ -181,9 +185,10 @@ class PlayQuiz extends React.Component {
     );
   }
 }
-function mapStateToProps({ quizset }) {
+function mapStateToProps({ quizset, users }) {
   return {
-    quizset: quizset.quizsetByTopic && quizset.quizsetByTopic.quizset
+    quizset: quizset.quizsetByTopic && quizset.quizsetByTopic.quizset,
+    user: users.user && users.user.user
   };
 }
 

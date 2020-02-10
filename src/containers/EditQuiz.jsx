@@ -21,7 +21,7 @@ class EditQuiz extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`http://localhost:3000/api/v1/quizzes/${this.props.questionId}`, {
+    fetch(`/api/v1/quizzes/${this.props.questionId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

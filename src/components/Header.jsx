@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FiHome, FiBook } from "react-icons/fi";
 import { GoGraph } from "react-icons/go";
 import { AiOutlineHistory, AiOutlineUser } from "react-icons/ai";
-import { fetchScores } from "../actions";
+import { fetchScores, fetchScore } from "../actions";
 import { connect } from "react-redux";
 
 class Header extends React.Component {
@@ -96,7 +96,10 @@ class Header extends React.Component {
                   : "header_item"
               }
               to="/score"
-              onClick={() => this.handleNav("score")}
+              onClick={() => {
+                this.handleNav("score");
+                this.props.dispatch(fetchScore());
+              }}
             >
               <AiOutlineHistory />
             </Link>

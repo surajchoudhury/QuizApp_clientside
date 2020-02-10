@@ -111,7 +111,7 @@ function setQuestionId(payload) {
 
 export function fetchQuizzes() {
   return dispatch => {
-    fetch("http://localhost:3000/api/v1/quizzes", {
+    fetch("/api/v1/quizzes", {
       headers: {
         "Content-Type": "application/json"
       }
@@ -127,7 +127,7 @@ export function fetchQuizzes() {
 
 export function fetchQuizsets() {
   return dispatch => {
-    fetch("http://localhost:3000/api/v1/quizsets", {
+    fetch("/api/v1/quizsets", {
       headers: {
         "Content-Type": "application/json"
       }
@@ -143,7 +143,7 @@ export function fetchQuizsets() {
 
 export function fetchQuestions(topic) {
   return dispatch => {
-    fetch(`http://localhost:3000/api/v1/quizzes/${topic}/questions`, {
+    fetch(`/api/v1/quizzes/${topic}/questions`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -160,7 +160,7 @@ export function fetchQuestions(topic) {
 
 export function fetchQuestion(id) {
   return dispatch => {
-    fetch(`http://localhost:3000/api/v1/quizzes/${id}`, {
+    fetch(`/api/v1/quizzes/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -178,7 +178,7 @@ export function fetchQuestion(id) {
 
 export function fetchScores() {
   return dispatch => {
-    fetch(`http://localhost:3000/api/v1/user/scores`, {
+    fetch(`/api/v1/user/scores`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -196,7 +196,7 @@ export function fetchScores() {
 
 export function fetchScore() {
   return dispatch => {
-    fetch(`http://localhost:3000/api/v1/user/score`, {
+    fetch(`/api/v1/user/score`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -214,7 +214,7 @@ export function fetchScore() {
 
 export function fetchUsers() {
   return dispatch => {
-    fetch("http://localhost:3000/api/v1/users", {
+    fetch("/api/v1/users", {
       headers: {
         "Content-Type": "application/json"
       }
@@ -230,7 +230,7 @@ export function fetchUsers() {
 
 export function fetchUser() {
   return dispatch => {
-    fetch("http://localhost:3000/api/v1/user", {
+    fetch("/api/v1/user", {
       headers: {
         "Content-Type": "application/json",
         authorization: localStorage.token
@@ -247,7 +247,7 @@ export function fetchUser() {
 
 export function fetchAdmins() {
   return dispatch => {
-    fetch("http://localhost:3000/api/v1/admins", {
+    fetch("/api/v1/admins", {
       headers: {
         "Content-Type": "application/json"
       }
@@ -263,7 +263,7 @@ export function fetchAdmins() {
 
 export function createQuizset(quizset) {
   return dispatch => {
-    fetch("http://localhost:3000/api/v1/quizsets", {
+    fetch("/api/v1/quizsets", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -284,7 +284,7 @@ export function createQuizset(quizset) {
 
 export function deleteQuizset(id) {
   return dispatch => {
-    fetch(`http://localhost:3000/api/v1/quizsets/${id}`, {
+    fetch(`/api/v1/quizsets/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -302,7 +302,7 @@ export function deleteQuizset(id) {
 
 export function createQuestion(topic, question, A, B, C, D, answer, history) {
   return dispatch => {
-    fetch(`http://localhost:3000/api/v1/quizsets/${topic}`, {
+    fetch(`/api/v1/quizsets/${topic}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -338,7 +338,7 @@ export function getQuizsetTopic(topic) {
 
 export function fetchQuizsetbyTopic(topic) {
   return dispatch => {
-    fetch(`http://localhost:3000/api/v1/quizsets/${topic}`, {
+    fetch(`/api/v1/quizsets/${topic}`, {
       method: "GET"
     })
       .then(res => res.json())
@@ -364,7 +364,7 @@ export function getScoreTopic(data) {
 
 export function updateScore(score, quizset) {
   return dispatch => {
-    fetch("http://localhost:3000/api/v1/user", {
+    fetch("/api/v1/user", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -386,7 +386,7 @@ export function updateScore(score, quizset) {
 
 export function updateUser(username, email, profile) {
   return dispatch => {
-    fetch("http://localhost:3000/api/v1/user", {
+    fetch("/api/v1/user", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -409,7 +409,7 @@ export function updateUser(username, email, profile) {
 
 export function deleteQuestion(topic, id) {
   return dispatch => {
-    fetch(`http://localhost:3000/api/v1/quizsets/${topic}/question/${id}`, {
+    fetch(`/api/v1/quizsets/${topic}/question/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -434,7 +434,7 @@ export function getQuestionId(id) {
 
 export function editQuestion(id, question, answer, A, B, C, D, history, topic) {
   return dispatch => {
-    fetch(`http://localhost:3000/api/v1/quizzes/${id}`, {
+    fetch(`/api/v1/quizzes/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -456,6 +456,24 @@ export function editQuestion(id, question, answer, A, B, C, D, history, topic) {
         if (question.success) {
           dispatch(fetchQuizsetbyTopic(topic));
           history.push("/quizzes/view");
+        }
+      });
+  };
+}
+
+export function completedByUsers(topic) {
+  return dispatch => {
+    fetch(`/api/v1/quizsets/${topic}/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: localStorage.token
+      }
+    })
+      .then(res => res.json())
+      .then(quizset => {
+        if (quizset.success) {
+          dispatch(fetchQuizsets());
         }
       });
   };

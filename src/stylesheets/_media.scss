@@ -1,0 +1,25 @@
+@media all and (max-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+  .main {
+    border-radius: 0;
+    width: 100%;
+  }
+
+  // .profile_container {
+  //   height: 90vh;
+  // }
+  .scores_container {
+    padding: 0.5rem;
+  }
+  .quizsets_container_small {
+    height: 90vh;
+  }
+  .all_score_container {
+    height: 72vh;
+  }
+  .all_score_container2 {
+    height: 56vh;
+  }
+}

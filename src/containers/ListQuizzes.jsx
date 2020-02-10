@@ -9,11 +9,6 @@ import Loader from "../components/Loader";
 import { getQuestionId } from "../actions";
 
 class ListQuizzes extends React.Component {
-  constructor() {
-    super();
-    this.state = {};
-  }
-
   render() {
     let quizsetno = 0;
     let { dispatch } = this.props;
@@ -30,7 +25,7 @@ class ListQuizzes extends React.Component {
             <ul className="questions_container">
               {this.props.quizset.questions.map(question => (
                 <li className="quizset question">
-                  <span className="quizset_no questions_no">{++quizsetno}</span>
+                  <span className="questions_no">{++quizsetno}</span>
                   <div className="quizset_content questions_content">
                     <span className="quizset_name question_name">
                       {question.question}

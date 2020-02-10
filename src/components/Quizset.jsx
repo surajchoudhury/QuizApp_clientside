@@ -26,9 +26,8 @@ class Quizset extends React.Component {
     this.state = {
       quizset: null
     };
-    this.input = React.createRef();
   }
-
+  input = React.createRef();
   handleChange = ({ target: { name, value } }) => {
     this.input.current.value = null;
     this.setState({ [name]: value });
@@ -70,19 +69,47 @@ class Quizset extends React.Component {
               </form>
             ) : null}
             <ul className="quizset_container">
-              {this.props.quizsets ? (
+              {this.props.quizsets && this.props.user ? (
                 this.props.quizsets.map(set => (
                   <li
-                    className="quizset"
+                    className={
+                      set.completedByUsers.includes(
+                        this.props.user._id
+                      )
+                        ? "quizset_completed"
+                        : "quizset"
+                    }
                     onClick={() =>
                       this.props.dispatch(fetchQuestions(set.topic))
                     }
                   >
-                    <span className="quizset_no quizset_no_edit">{++quizsetno}</span>
-                    <div className="quizset_content">
-                      <span className="quizset_name">{set.topic}</span>
+                    <p
+                      className={
+                        set.completedByUsers.includes(
+                          this.props.user._id
+                        )
+                          ? "quizset_no_completed"
+                          : "quizset_no "
+                      }
+                    >
+                      {++quizsetno}
+                    </p>
+                    <div className={
+                      set.completedByUsers.includes(
+                        this.props.user._id
+                      )
+                        ? "quizset_content_completed"
+                        : "quizset_content"
+                    }>
+                      <span  className={
+                      set.completedByUsers.includes(
+                        this.props.user._id
+                      )
+                        ? "quizset_name_completed"
+                        : "quizset_name"
+                    }>{set.topic}</span>
                       {this.props.isAdmin ? (
-                        <div className="edit_quizset_container edit_quizset_container_edit">
+                        <div className="edit_quizset_container">
                           ...
                           <span className="add_question">
                             <Link
@@ -106,13 +133,23 @@ class Quizset extends React.Component {
                           </span>
                         </div>
                       ) : null}
-                      <div className="quiz_count_container">
-                        <span className="quiz_count">
+                      <div
+                        className={
+                          set.completedByUsers.includes(
+                          this.props.user._id
+                          )
+                            ? "quiz_count_container_completed"
+                            : "quiz_count_container"
+                        }
+                      >
+                        <span className={  set.completedByUsers.includes(
+                          this.props.user._id
+                          ) ? "quiz_count_completed" : "quiz_count"}>
                           <MdQuestionAnswer className="quiz_logo" />{" "}
                           {set.questions.length} Questions
                         </span>
                         {this.props.isAdmin ? (
-                          <span className="play_button play_botton_edit">
+                          <span className="edit_button">
                             <Link
                               to="/quizzes/view"
                               className="add_question_link"
@@ -128,7 +165,16 @@ class Quizset extends React.Component {
                           </span>
                         ) : (
                           <span className="play_button">
-                            <Link to="questions" className="add_question_link">
+                            <Link
+                              to="questions"
+                              className={
+                                set.completedByUsers.includes(
+                                  this.props.user._id
+                                )
+                                  ? "add_question_link_completed"
+                                  : "add_question_link"
+                              }
+                            >
                               <AiOutlinePlayCircle
                                 onClick={() =>
                                   this.props.dispatch(
@@ -154,9 +200,10 @@ class Quizset extends React.Component {
   }
 }
 
-function mapStateToProps({ quizzes }) {
+function mapStateToProps({ quizzes, users }) {
   return {
-    quizsets: quizzes.quizsets && quizzes.quizsets.quizsets
+    quizsets: quizzes.quizsets && quizzes.quizsets.quizsets,
+    user: users.user && users.user.user
   };
 }
 

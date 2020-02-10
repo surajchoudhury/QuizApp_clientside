@@ -23,7 +23,7 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:3000/api/v1/user", {
+    fetch("/api/v1/user", {
       headers: {
         "Content-Type": "application/json",
         authorization: localStorage.token

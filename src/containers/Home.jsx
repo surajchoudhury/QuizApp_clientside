@@ -77,7 +77,7 @@ class Home extends React.Component {
         <Route path="/users/login">
           <Login
             text="User"
-            URL={"http://localhost:3000/api/v1/users/login"}
+            URL={"/api/v1/users/login"}
             isLogged={this.handleLogin}
             currentUser={this.currentLoggedUser}
           />
@@ -85,7 +85,7 @@ class Home extends React.Component {
         <Route path="/admins/login">
           <Login
             text="Admin"
-            URL={"http://localhost:3000/api/v1/admins/login"}
+            URL={"/api/v1/admins/login"}
             isLogged={this.handleLogin}
             currentUser={this.currentLoggedUser}
           />
@@ -103,7 +103,6 @@ class Home extends React.Component {
         <Route path="/user">
           <>
             <Profile user={this.props.user} isLogged={this.handleLogin} />
-            <Header isLoggedin={this.props.isLogged} isAdmin={isAdmin} />
           </>
         </Route>
 
@@ -116,7 +115,6 @@ class Home extends React.Component {
         </Route>
         <Route path="/quizzes/view">
           <ListQuizzes isAdmin={isAdmin} />
-          <Header isLoggedin={this.props.isLogged} isAdmin={isAdmin} />
         </Route>
         <Route exact path="/quizzes/edit">
           <EditQuiz quizId={this.state.quizId} updateState={this.updateState} />
@@ -125,29 +123,26 @@ class Home extends React.Component {
         <Route path="/quizsets">
           <>
             <Quizset isAdmin={isAdmin} />
-            <Header isLoggedin={this.props.isLogged} isAdmin={isAdmin} />
           </>
         </Route>
         <Route path="/quizzes/new">{isAdmin ? <NewQuiz /> : null}</Route>
         <Route path="/scores">
           <>
             <Scores />
-            <Header isLoggedin={this.props.isLogged} isAdmin={isAdmin} />
           </>
         </Route>
         <Route path="/score">
           <>
             <Score />
-            <Header isLoggedin={this.props.isLogged} isAdmin={isAdmin} />
           </>
         </Route>
 
         <Route exact path="/">
           <>
             <HomePage />
-            <Header isLoggedin={this.props.isLogged} isAdmin={isAdmin} />
           </>
         </Route>
+        <Header isLoggedin={this.props.isLogged} isAdmin={isAdmin} />
       </>
     );
   };
@@ -161,7 +156,6 @@ class Home extends React.Component {
     return (
       <>
         <main className="main">
-         
           <Switch>
             {this.state.isLogged
               ? this.protectedRoutes(isAdmin)
