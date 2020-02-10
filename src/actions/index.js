@@ -35,6 +35,7 @@ function setUser(payload) {
     payload
   };
 }
+
 function setAdmins(payload) {
   return {
     type: SET_ADMINS,
@@ -432,6 +433,24 @@ export function getQuestionId(id) {
   };
 }
 
+export function updateQuizset(id, history) {
+  return dispatch => {
+    fetch(`/api/v1/quizsets/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: localStorage.token
+      }
+    })
+      .then(res => res.json())
+      .then(quizset => {
+        if (quizset.success) {
+          dispatch(fetchQuizsets());
+          history.push("/quizsets");
+        }
+      });
+  };
+}
 export function editQuestion(id, question, answer, A, B, C, D, history, topic) {
   return dispatch => {
     fetch(`/api/v1/quizzes/${id}`, {

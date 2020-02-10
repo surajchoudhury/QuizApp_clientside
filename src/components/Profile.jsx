@@ -8,7 +8,7 @@ import {
 } from "react-icons/ai";
 import Loader from "./Loader";
 import { FiClipboard } from "react-icons/fi";
-import { MdUpdate } from "react-icons/md";
+// import { MdUpdate } from "react-icons/md";
 import { connect } from "react-redux";
 import { updateUser } from "../actions";
 
@@ -104,9 +104,9 @@ class Profile extends React.Component {
                 <span className="Profile_score">Score</span>
               </Link>
             ) : null}
-            <p onClick={this.updateUser} className="update_user">
+            {/* <p onClick={this.updateUser} className="update_user">
               <MdUpdate  />
-            </p>
+            </p> */}
             <Link to="/">
               <p
                 className="logout"

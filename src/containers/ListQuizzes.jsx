@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
-import { deleteQuestion } from "../actions";
+import { deleteQuestion, updateQuizset } from "../actions";
 
 // relative
 import Loader from "../components/Loader";
@@ -20,7 +20,11 @@ class ListQuizzes extends React.Component {
               <Link to="/quizsets" className="back_arrow">
                 <p>←</p>
               </Link>
-              <p className="signup">{this.props.quizset.topic}</p>
+              <input
+                className="signup"
+                placeholder={this.props.quizset.topic}
+              />
+              {/* <p className="signup">{this.props.quizset.topic}</p> */}
             </div>
             <ul className="questions_container">
               {this.props.quizset.questions.map(question => (
