@@ -39,7 +39,7 @@
   position: absolute;
 }
 .signin_form {
-  padding: 2rem 0 4rem 0;
+  padding: 2rem 0 2.8rem 0;
 }
 .input_signin {
   width: 100%;
@@ -81,6 +81,10 @@
   font-weight: 600;
   color: rgb(109, 29, 236);
   text-decoration: underline;
+}
+.signin_as_admin {
+  font-size: .8rem;
+  padding-top: 1rem;
 }
 .is-false{
   border-bottom: 2px solid red;

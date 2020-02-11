@@ -141,7 +141,18 @@ class Login extends React.Component {
                 {this.state.updating ? <LoaderSmall /> : null}
               </button>
             </p>
+            <p className="signin_as_admin">
+              Sign in as{" "}
+              <Link
+                to={
+                  this.props.text === "User" ? "/admins/login" : "/users/login"
+                }
+              >
+                <small className="register_now">{this.props.text}</small>
+              </Link>
+            </p>
           </form>
+
           <p className="register_here">
             Dont have an account?{" "}
             <Link to="/users/new">
