@@ -46,7 +46,7 @@
 .quizset_content_completed {
   width: 60%;
   position: relative;
-  color:#fff;
+  color: #fff;
 }
 .quizset_no {
   display: flex;
@@ -234,3 +234,11 @@
     color: #905ce3;
   }
 }
+
+.input_quizset_edit {
+  text-align: center;
+  border: none;
+  border-bottom: 1px solid transparent;
+  outline: none;
+}
+

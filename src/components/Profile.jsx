@@ -6,9 +6,9 @@ import {
   AiOutlineFileImage,
   AiOutlineUser
 } from "react-icons/ai";
+import { MdUpdate } from "react-icons/md";
 import Loader from "./Loader";
 import { FiClipboard } from "react-icons/fi";
-// import { MdUpdate } from "react-icons/md";
 import { connect } from "react-redux";
 import { updateUser } from "../actions";
 
@@ -53,7 +53,7 @@ class Profile extends React.Component {
   render() {
     return (
       <>
-        {this.props.user ? (
+        {this.props.user && this.state.username ? (
           <div className="profile_container">
             <form className="form_profile">
               <div className="profile_name_pic">
@@ -100,13 +100,13 @@ class Profile extends React.Component {
 
             {!this.props.user.isAdmin ? (
               <Link to="/score" className="score_link">
-                <FiClipboard className="icon_profile1"/>
+                <FiClipboard className="icon_profile1" />
                 <span className="Profile_score">Score</span>
               </Link>
             ) : null}
-            {/* <p onClick={this.updateUser} className="update_user">
-              <MdUpdate  />
-            </p> */}
+            <p onClick={this.updateUser} className="update_user">
+              <MdUpdate />
+            </p>
             <Link to="/">
               <p
                 className="logout"

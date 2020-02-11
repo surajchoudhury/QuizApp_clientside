@@ -46,6 +46,13 @@
 }
 .option1 {
   font-size: .7rem;
+  display: flex;
+  align-items: center;
+  padding: .1rem 0;
+}
+.question_option {
+  padding-left: .2rem;
+  font-weight: 400;
   line-height: 1.3;
 }
 .dots {

@@ -13,7 +13,7 @@
 .question_no {
   height: 3rem;
   width: 3rem;
-  font-size: 2rem;
+  font-size: 1.8rem;
   z-index: 1;
   display: flex;
   align-items: center;
@@ -34,15 +34,16 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.2);
+  color: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.2);
   transition: all 1.5s;
-  color: #fff;
   position: absolute;
   left: 1.1rem;
   bottom: 7.7rem;
 }
 .tick2 {
-  background-color: #905ce3;
+  color: #905ce3;
+  border: 1px solid #905ce3;
 }
 .progress_container_question {
   background-color: rgba(0, 0, 0, 0.1);
@@ -127,4 +128,16 @@
 .updated {
   transform: rotate(360deg);
   transition: all 1s;
+}
+.update_question {
+  padding-right: .5rem;
+}
+
+.update_loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .3s;
+  pointer-events: none;
+  background-color: rgb(209, 209, 209);
 }

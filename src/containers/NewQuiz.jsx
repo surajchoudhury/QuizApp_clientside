@@ -3,6 +3,8 @@ import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { createQuestion } from "../actions";
+import { IoMdArrowRoundBack, IoMdCheckmarkCircle } from "react-icons/io";
+import {LoaderSmall} from '../components/Loader'
 
 class NewQuiz extends React.Component {
   constructor() {
@@ -13,7 +15,8 @@ class NewQuiz extends React.Component {
       A: null,
       B: null,
       C: null,
-      D: null
+      D: null,
+      updating: false
     };
   }
 
@@ -95,13 +98,29 @@ class NewQuiz extends React.Component {
       return "filled";
     }
   };
+
+  handleUpdate = () => {
+    if (
+      this.state.question &&
+      this.state.A &&
+      this.state.B &&
+      this.state.C &&
+      this.state.D &&
+      this.state.answer
+    ) {
+      this.setState({ updating: true });
+    } else {
+      this.setState({ updating: false });
+    }
+  };
+
   render() {
     return (
       <>
         <div className="signup_container">
           <div className="arrow_container">
             <Link to="/quizsets" className="back_arrow">
-              <p>←</p>
+              <IoMdArrowRoundBack />
             </Link>
             <p className="signup">Question</p>
           </div>
@@ -120,7 +139,7 @@ class NewQuiz extends React.Component {
                 : "tick"
             }
           >
-            ✓
+            <IoMdCheckmarkCircle />
           </p>
           <div className="progress_container_question">
             <p className={this.checkProgress()}></p>
@@ -183,7 +202,18 @@ class NewQuiz extends React.Component {
               <option>{this.state.C}</option>
               <option>{this.state.D}</option>
             </select>
-            <button className="button_signup is-success">Create</button>
+            <button
+              className={
+                this.state.updating
+                  ? "button_signup update_loading "
+                  : "button_signup"
+              }
+              onClick={this.handleUpdate}
+            >
+              {" "}
+              <span className="update_question">Create</span>{" "}
+              {this.state.updating ? <LoaderSmall /> : null}
+            </button>
           </form>
         </div>
       </>

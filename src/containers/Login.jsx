@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter, Link } from "react-router-dom";
+import { LoaderSmall } from "../components/Loader";
 
 class Login extends React.Component {
   constructor() {
@@ -9,15 +10,15 @@ class Login extends React.Component {
       password: null,
       message: null,
       errors: {
-        invalidUsername: null,
         invalidEmail: null,
         invalidPassword: null
-      }
+      },
+      updating: false
     };
   }
 
   handleChange = ({ target: { name, value } }) => {
-    this.setState({ [name]: value });
+    this.setState({ [name]: value, message: null });
   };
 
   errorHandler = event => {
@@ -55,24 +56,41 @@ class Login extends React.Component {
           this.props.currentUser();
           this.props.history.push("/");
         } else {
-          this.setState({ message: user.message });
+          this.setState({ message: user.message, updating: false });
         }
       });
+  };
+
+  handleUpdate = () => {
+    if (
+      this.state.email &&
+      this.state.password &&
+      !this.state.invalidEmail &&
+      !this.state.invalidPassword &&
+      !this.state.message
+    ) {
+      this.setState({ updating: true });
+    } else {
+      this.setState({ updating: false });
+    }
   };
 
   render() {
     return (
       <>
         <div className="signin_container">
-        <Link to="/admins/login" className="admin_link">○</Link>
+          <Link to="/admins/login" className="admin_link">
+            ○
+          </Link>
           <figure className="signin_fig_container">
             <img src="/images/signin.svg" alt="" srcset="" />
           </figure>
           <p className="Quizapp">Quiz App</p>
           <p className="login_user ">{this.props.text}</p>
           <form onSubmit={this.errorHandler} className="signin_form">
-            <label className="label_invalid is-danger">{this.state.message}</label>{" "}
-          
+            <label className="label_invalid is-danger">
+              {this.state.message}
+            </label>{" "}
             <label className="label_email ">Email</label>{" "}
             <label className="incorrect_container">
               <label className="label_incorrect is-danger">
@@ -110,8 +128,17 @@ class Login extends React.Component {
               onChange={this.handleChange}
             />
             <p className="control ">
-              <button className="button_signin is-success" type="submit">
-                Sign in
+              <button
+                className={
+                  this.state.updating
+                    ? "button_signin update_loading "
+                    : "button_signin"
+                }
+                type="submit"
+                onClick={this.handleUpdate}
+              >
+                <span className="update_question">Sign In</span>{" "}
+                {this.state.updating ? <LoaderSmall /> : null}
               </button>
             </p>
           </form>

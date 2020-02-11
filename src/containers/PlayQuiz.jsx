@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
 import { getScoreTopic, updateScore, completedByUsers } from "../actions";
+import {IoMdArrowRoundBack} from 'react-icons/io'
 
 class PlayQuiz extends React.Component {
   constructor() {
@@ -59,7 +60,7 @@ class PlayQuiz extends React.Component {
             <div className="play_quiz_container_small">
               <div className="arrow_container">
                 <Link to="/quizsets" className="back_arrow back_arrow_playquiz">
-                  <p>←</p>
+                  <IoMdArrowRoundBack />
                 </Link>
                 <p className="signup top_content_plazquiz">
                   {this.props.quizset.topic}

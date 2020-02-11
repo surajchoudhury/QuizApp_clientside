@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { MdQuestionAnswer } from "react-icons/md";
 import Loader from "../components/Loader";
+import { IoMdArrowRoundBack } from "react-icons/io";
 import {
   AiOutlinePlayCircle,
   AiOutlinePlus,
@@ -17,6 +18,7 @@ import {
   deleteQuizset,
   getQuizsetTopic,
   fetchQuizset,
+  fetchQuizsets,
   fetchQuizsetbyTopic
 } from "../actions";
 
@@ -24,12 +26,11 @@ class Quizset extends React.Component {
   constructor() {
     super();
     this.state = {
-      quizset: null
+      quizset: null,
+      updating: false
     };
   }
-  input = React.createRef();
   handleChange = ({ target: { name, value } }) => {
-    this.input.current.value = null;
     this.setState({ [name]: value });
   };
   handleSubmit = event => {
@@ -37,7 +38,22 @@ class Quizset extends React.Component {
     this.props.dispatch(createQuizset(this.state.quizset));
   };
   handleDelete = id => {
-    this.props.dispatch(deleteQuizset(id));
+    this.setState({ updating: true });
+    // this.props.dispatch(deleteQuizset(id));
+    fetch(`/api/v1/quizsets/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: localStorage.token
+      }
+    })
+      .then(res => res.json())
+      .then(quizset => {
+        if (quizset.success) {
+          this.setState({ updating: false });
+          this.props.dispatch(fetchQuizsets());
+        }
+      });
   };
   render() {
     let quizsetno = 0;
@@ -46,7 +62,7 @@ class Quizset extends React.Component {
         <div className="quizsets_container">
           <div className="arrow_container">
             <Link to="/" className="back_arrow">
-              <p>←</p>
+              <IoMdArrowRoundBack />
             </Link>
             <p className="signup">Quizsets</p>
           </div>
@@ -64,18 +80,16 @@ class Quizset extends React.Component {
                   value={this.state.quizset}
                   onChange={this.handleChange}
                   placeholder="Create a quizset"
-                  ref={this.input}
                 />
               </form>
             ) : null}
+            {this.state.updating ? <Loader /> : null}
             <ul className="quizset_container">
               {this.props.quizsets && this.props.user ? (
                 this.props.quizsets.map(set => (
                   <li
                     className={
-                      set.completedByUsers.includes(
-                        this.props.user._id
-                      )
+                      set.completedByUsers.includes(this.props.user._id)
                         ? "quizset_completed"
                         : "quizset"
                     }
@@ -85,29 +99,29 @@ class Quizset extends React.Component {
                   >
                     <p
                       className={
-                        set.completedByUsers.includes(
-                          this.props.user._id
-                        )
+                        set.completedByUsers.includes(this.props.user._id)
                           ? "quizset_no_completed"
                           : "quizset_no "
                       }
                     >
                       {++quizsetno}
                     </p>
-                    <div className={
-                      set.completedByUsers.includes(
-                        this.props.user._id
-                      )
-                        ? "quizset_content_completed"
-                        : "quizset_content"
-                    }>
-                      <span  className={
-                      set.completedByUsers.includes(
-                        this.props.user._id
-                      )
-                        ? "quizset_name_completed"
-                        : "quizset_name"
-                    }>{set.topic}</span>
+                    <div
+                      className={
+                        set.completedByUsers.includes(this.props.user._id)
+                          ? "quizset_content_completed"
+                          : "quizset_content"
+                      }
+                    >
+                      <span
+                        className={
+                          set.completedByUsers.includes(this.props.user._id)
+                            ? "quizset_name_completed"
+                            : "quizset_name"
+                        }
+                      >
+                        {set.topic}
+                      </span>
                       {this.props.isAdmin ? (
                         <div className="edit_quizset_container">
                           ...
@@ -133,18 +147,21 @@ class Quizset extends React.Component {
                           </span>
                         </div>
                       ) : null}
+
                       <div
                         className={
-                          set.completedByUsers.includes(
-                          this.props.user._id
-                          )
+                          set.completedByUsers.includes(this.props.user._id)
                             ? "quiz_count_container_completed"
                             : "quiz_count_container"
                         }
                       >
-                        <span className={  set.completedByUsers.includes(
-                          this.props.user._id
-                          ) ? "quiz_count_completed" : "quiz_count"}>
+                        <span
+                          className={
+                            set.completedByUsers.includes(this.props.user._id)
+                              ? "quiz_count_completed"
+                              : "quiz_count"
+                          }
+                        >
                           <MdQuestionAnswer className="quiz_logo" />{" "}
                           {set.questions.length} Questions
                         </span>

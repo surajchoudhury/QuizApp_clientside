@@ -394,8 +394,8 @@ export function updateUser(username, email, profile) {
         authorization: localStorage.token
       },
       body: JSON.stringify({
-        username,
-        email,
+        // username,
+        // email,
         profile
       })
     })
@@ -433,14 +433,17 @@ export function getQuestionId(id) {
   };
 }
 
-export function updateQuizset(id, history) {
+export function updateQuizset(id, topic, history) {
   return dispatch => {
     fetch(`/api/v1/quizsets/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
         authorization: localStorage.token
-      }
+      },
+      body: JSON.stringify({
+        topic
+      })
     })
       .then(res => res.json())
       .then(quizset => {

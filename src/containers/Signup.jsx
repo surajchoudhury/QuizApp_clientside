@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter, Link } from "react-router-dom";
-// import { MdArrowBack } from "react-icons/md";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { LoaderSmall } from "../components/Loader";
 
 class Signup extends React.Component {
   constructor() {
@@ -9,17 +10,19 @@ class Signup extends React.Component {
       username: null,
       email: null,
       password: null,
-      progress: null,
       errors: {
         invalidUsername: null,
         invalidEmail: null,
         invalidPassword: null
-      }
+      },
+      updating: false
     };
   }
 
   handleChange = ({ target: { name, value } }) => {
-    this.setState({ [name]: value }, () => this.checkProgress());
+    this.setState({ [name]: value, updating: false }, () =>
+      this.checkProgress()
+    );
   };
 
   errorHandler = event => {
@@ -76,7 +79,7 @@ class Signup extends React.Component {
         invalidPassword: "Password can't be empty!"
       });
     } else if (!this.state.email.includes(".com")) {
-      this.setState({ invalidEmail: "Invalid email format" });
+      this.setState({ invalidEmail: "Invalid email format!" });
     } else {
       this.newUser();
     }
@@ -118,13 +121,29 @@ class Signup extends React.Component {
     }
   };
 
+  handleUpdate = () => {
+    if (
+      this.state.email &&
+      this.state.email.includes(".com") &&
+      this.state.password &&
+      this.state.username &&
+      !this.state.invalidEmail &&
+      !this.state.invalidPassword &&
+      !this.state.invalidUsername
+    ) {
+      this.setState({ updating: true });
+    } else {
+      this.setState({ updating: false });
+    }
+  };
+
   render() {
     return (
       <>
         <div className="signup_container">
           <div className="arrow_container">
             <Link to="/users/login" className="back_arrow">
-              <p>←</p>
+              <IoMdArrowRoundBack />
             </Link>
             <p className="signup">Sign Up</p>
           </div>
@@ -196,8 +215,17 @@ class Signup extends React.Component {
               onChange={this.handleChange}
             />
 
-            <button className="button_signup is-success" type="submit">
-              Continue
+            <button
+              className={
+                this.state.updating
+                  ? "button_signin update_loading "
+                  : "button_signin"
+              }
+              type="submit"
+              onClick={this.handleUpdate}
+            >
+              <span className="update_question">Continue</span>{" "}
+              {this.state.updating ? <LoaderSmall /> : null}
             </button>
           </form>
         </div>
