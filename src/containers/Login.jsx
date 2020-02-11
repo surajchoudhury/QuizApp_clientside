@@ -148,7 +148,9 @@ class Login extends React.Component {
                   this.props.text === "User" ? "/admins/login" : "/users/login"
                 }
               >
-                <small className="register_now">{this.props.text}</small>
+                <small className="register_now">
+                  {this.props.text === "Admin" ? "User" : "Admin"}
+                </small>
               </Link>
             </p>
           </form>
