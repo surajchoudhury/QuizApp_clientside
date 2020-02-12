@@ -5,7 +5,7 @@ const HomePage = () => {
   return (
     <>
       <div className="homepage">
-        <span className="brain">🧠</span>
+        <span className="brain"><img className="brain_img" src="/images/brain.svg" alt="" srcset=""/></span>
         <figure>
           {localStorage.token ? (
             <img src="/images/question.svg" alt="" srcset="" />

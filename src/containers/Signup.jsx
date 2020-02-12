@@ -29,36 +29,36 @@ class Signup extends React.Component {
     event.preventDefault();
     if (!this.state.username && !this.state.email && !this.state.password) {
       this.setState({
-        invalidUsername: "Username can't be empty",
-        invalidEmail: "Email can't be empty!",
-        invalidPassword: "Password can't be empty!"
+        invalidUsername: "⚠︎ Username can't be empty",
+        invalidEmail: "⚠︎ Email can't be empty!",
+        invalidPassword: "⚠︎ Password can't be empty!"
       });
     } else if (
       !this.state.username &&
       this.state.email &&
       this.state.password
     ) {
-      this.setState({ invalidUsername: "Username can't be empty!" });
+      this.setState({ invalidUsername: "⚠︎ Username can't be empty!" });
     } else if (
       this.state.username &&
       !this.state.email &&
       this.state.password
     ) {
-      this.setState({ invalidEmail: "Email can't be empty!" });
+      this.setState({ invalidEmail: "⚠︎ Email can't be empty!" });
     } else if (
       this.state.username &&
       this.state.email &&
       !this.state.password
     ) {
-      this.setState({ invalidPassword: "Password can't be empty!" });
+      this.setState({ invalidPassword: "⚠︎ Password can't be empty!" });
     } else if (
       !this.state.username &&
       !this.state.email &&
       this.state.password
     ) {
       this.setState({
-        invalidUsername: "Username can't be empty!",
-        invalidEmail: "Email can't be empty!"
+        invalidUsername: "⚠︎ Username can't be empty!",
+        invalidEmail: "⚠︎ Email can't be empty!"
       });
     } else if (
       this.state.username &&
@@ -66,8 +66,8 @@ class Signup extends React.Component {
       !this.state.password
     ) {
       this.setState({
-        invalidEmail: "Email can't be empty!",
-        invalidPassword: "Password can't be empty!"
+        invalidEmail: "⚠︎ Email can't be empty!",
+        invalidPassword: "⚠︎ Password can't be empty!"
       });
     } else if (
       !this.state.username &&
@@ -75,11 +75,11 @@ class Signup extends React.Component {
       !this.state.password
     ) {
       this.setState({
-        invalidUsername: "Username can't be empty!",
-        invalidPassword: "Password can't be empty!"
+        invalidUsername: "⚠︎ Username can't be empty!",
+        invalidPassword: "⚠︎ Password can't be empty!"
       });
     } else if (!this.state.email.includes(".com")) {
-      this.setState({ invalidEmail: "Invalid email format!" });
+      this.setState({ invalidEmail: "⚠︎ Invalid email format!" });
     } else {
       this.newUser();
     }
@@ -218,8 +218,8 @@ class Signup extends React.Component {
             <button
               className={
                 this.state.updating
-                  ? "button_signin update_loading "
-                  : "button_signin"
+                  ? "button_signup update_loading "
+                  : "button_signup"
               }
               type="submit"
               onClick={this.handleUpdate}

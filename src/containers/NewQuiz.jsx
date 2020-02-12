@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { createQuestion } from "../actions";
 import { IoMdArrowRoundBack, IoMdCheckmarkCircle } from "react-icons/io";
-import {LoaderSmall} from '../components/Loader'
+import { LoaderSmall } from "../components/Loader";
 
 class NewQuiz extends React.Component {
   constructor() {
@@ -16,12 +16,13 @@ class NewQuiz extends React.Component {
       B: null,
       C: null,
       D: null,
-      updating: false
+      updating: false,
+      err: null
     };
   }
 
   onChange = ({ target: { name, value } }) => {
-    this.setState({ [name]: value }, () => this.checkProgress());
+    this.setState({ [name]: value, err: null }, () => this.checkProgress());
   };
 
   createQuiz = event => {
@@ -110,7 +111,7 @@ class NewQuiz extends React.Component {
     ) {
       this.setState({ updating: true });
     } else {
-      this.setState({ updating: false });
+      this.setState({ updating: false, err: "⚠︎ Must fill all the fields!" });
     }
   };
 
@@ -155,7 +156,13 @@ class NewQuiz extends React.Component {
                 value={this.state.question}
               ></textarea>
             </div>
-            <label class="label_options">Options</label>
+            <label
+              className={
+                this.state.err ? "label_options_err" : "label_options"
+              }
+            >
+              {this.state.err ? this.state.err : "Options"}
+            </label>
 
             <input
               className="input_question is-primary"

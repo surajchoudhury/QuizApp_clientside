@@ -113,7 +113,7 @@ class Header extends React.Component {
             }
             onClick={() => {
               this.handleNav("progress");
-              this.props.dispatch(fetchScores());
+              this.props.dispatch(fetchScores(this.props.history));
             }}
           >
             <GoGraph />

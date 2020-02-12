@@ -103,11 +103,17 @@
   text-align: left;
   padding: 1rem 0;
 }
+.label_options_err {
+  display: block;
+  text-align: left;
+  padding: 1rem 0;
+  color: red;
+}
 .select_question {
   width: 100%;
   height: 2rem;
   margin: 2rem 0;
-  border: 1px solid rgba(#905ce3,.5);
+  border: 1px solid rgba(#905ce3, 0.5);
   outline: none;
 }
 .button_create {
@@ -123,21 +129,21 @@
   margin: 0.5rem 0;
 }
 
-//update quiz 
+//update quiz
 
 .updated {
   transform: rotate(360deg);
   transition: all 1s;
 }
 .update_question {
-  padding-right: .5rem;
+  padding-right: 0.5rem;
 }
 
 .update_loading {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all .3s;
+  transition: all 0.3s;
   pointer-events: none;
   background-color: rgb(209, 209, 209);
 }

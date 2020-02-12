@@ -13,9 +13,7 @@ import {
 } from "react-icons/ai";
 import { FaBook } from "react-icons/fa";
 import {
-  createQuizset,
   fetchQuestions,
-  deleteQuizset,
   getQuizsetTopic,
   fetchQuizset,
   fetchQuizsets,
@@ -27,7 +25,8 @@ class Quizset extends React.Component {
     super();
     this.state = {
       quizset: null,
-      updating: false
+      updating: false,
+      showQuizset: false
     };
   }
   handleChange = ({ target: { name, value } }) => {
@@ -35,11 +34,27 @@ class Quizset extends React.Component {
   };
   handleSubmit = event => {
     event.preventDefault();
-    this.props.dispatch(createQuizset(this.state.quizset));
+    this.setState({ updating: true });
+    fetch("/api/v1/quizsets", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: localStorage.token
+      },
+      body: JSON.stringify({
+        topic: this.state.quizset
+      })
+    })
+      .then(res => res.json())
+      .then(quizset => {
+        if (quizset.success) {
+          this.setState({ updating: false, showQuizset: false });
+          this.props.dispatch(fetchQuizsets());
+        }
+      });
   };
   handleDelete = id => {
     this.setState({ updating: true });
-    // this.props.dispatch(deleteQuizset(id));
     fetch(`/api/v1/quizsets/${id}`, {
       method: "DELETE",
       headers: {
@@ -69,17 +84,24 @@ class Quizset extends React.Component {
           <div className="quizsets_container_small">
             {this.props.isAdmin ? (
               <form className="quizset_form" onSubmit={this.handleSubmit}>
-                <p className="add_quizset">
+                <p
+                  className="add_quizset"
+                  onClick={() => this.setState({ showQuizset: true })}
+                >
                   <AiOutlinePlus />
                   <FaBook />
                 </p>
 
                 <input
-                  className="create_quizset"
+                  className={
+                    this.state.showQuizset
+                      ? " create_quizset_visible"
+                      : "create_quizset"
+                  }
                   name="quizset"
                   value={this.state.quizset}
                   onChange={this.handleChange}
-                  placeholder="Create a quizset"
+                  placeholder="Type quizset and press ⏎ "
                 />
               </form>
             ) : null}

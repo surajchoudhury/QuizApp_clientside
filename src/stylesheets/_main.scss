@@ -23,8 +23,13 @@ html {
   }
 }
 .brain {
-  font-size: 5rem;
-  padding: 0;
+  display: block;
+  width: 35%;
+  margin: auto;
+  padding: .5rem;
+}
+.brain_img {
+  width: 100%;
 }
 
 //main
@@ -61,7 +66,7 @@ html {
 .box2 {
   position: absolute;
   filter: blur(5px);
-  background-color: rgba($color: #fff, $alpha: 0.9);
+  background-color: rgba($color: #fff, $alpha: 0.8);
   top: 0;
   bottom: 0;
   left: 0;

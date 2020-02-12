@@ -5,7 +5,7 @@
   padding: 1rem;
   overflow-y: scroll;
   background-color: rgb(244, 243, 247);
-  height: 68vh;
+  height: 530px;
 }
 .quizsets_container_small::-webkit-scrollbar {
   display: none;
@@ -173,12 +173,24 @@
 .create_quizset {
   padding: 0.5rem;
   border: none;
-  border-bottom: 1px solid transparent;
+  border-bottom: 1.5px solid transparent;
   font-size: 0.9rem;
   background-color: transparent;
   outline: none;
+  transition: all 0.5s;
+  width: 0%;
+}
+.create_quizset_visible {
+  padding: 0.5rem;
+  border: none;
+  font-size: 0.9rem;
+  background-color: transparent;
+  outline: none;
+  transition: all 0.5s;
+  width: 60%;
+  border-bottom: 1.5px solid #c1a1f5;
   &:focus {
-    border-bottom: 1px solid #905ce3;
+    border-bottom: 1.5px solid #905ce3;
   }
 }
 
@@ -241,4 +253,3 @@
   border-bottom: 1px solid transparent;
   outline: none;
 }
-

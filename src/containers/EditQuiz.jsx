@@ -20,7 +20,8 @@ class EditQuiz extends React.Component {
       C: null,
       D: null,
       quizset: null,
-      updating: false
+      updating: false,
+      err: null
     };
   }
 
@@ -49,7 +50,7 @@ class EditQuiz extends React.Component {
   }
 
   onChange = ({ target: { name, value } }) => {
-    this.setState({ [name]: value });
+    this.setState({ [name]: value, err: null });
   };
 
   editQuiz = event => {
@@ -129,25 +130,33 @@ class EditQuiz extends React.Component {
     }
   };
 
-  handleUpdate = () => {
+  handleUpdate = event => {
     if (
       this.state.question &&
       this.state.A &&
       this.state.B &&
       this.state.C &&
       this.state.D &&
+      this.state.D &&
+      !this.state.err &&
       this.state.answer
     ) {
       this.setState({ updating: true });
+      this.editQuiz(event);
     } else {
-      this.setState({ updating: false });
+      this.setState({ updating: false, err: "⚠︎ Must fill all the fields!" });
     }
   };
 
   render() {
     return (
       <>
-        {this.state.question ? (
+        {this.state.question ||
+        this.state.A ||
+        this.state.B ||
+        this.state.C ||
+        this.state.D ||
+        this.state.answer ? (
           <div className="signup_container">
             <div className="arrow_container">
               <Link to="/quizsets" className="back_arrow">
@@ -186,7 +195,7 @@ class EditQuiz extends React.Component {
             <div className="progress_container_question">
               <p className={this.checkProgress()}></p>
             </div>
-            <form onSubmit={this.editQuiz} className="new_question_form">
+            <form className="new_question_form">
               <div class="control">
                 <textarea
                   className="textarea_question"
@@ -196,7 +205,13 @@ class EditQuiz extends React.Component {
                   value={this.state.question}
                 ></textarea>
               </div>
-              <label class="label_options">Options</label>
+              <label
+                className={
+                  this.state.err ? "label_options_err" : "label_options"
+                }
+              >
+                {this.state.err ? this.state.err : "Options"}
+              </label>
 
               <input
                 className="input_question is-primary"

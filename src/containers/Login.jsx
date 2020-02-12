@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter, Link } from "react-router-dom";
 import { LoaderSmall } from "../components/Loader";
+import {MdError,MdErrorOutline} from 'react-icons/md';
 
 class Login extends React.Component {
   constructor() {
@@ -25,13 +26,13 @@ class Login extends React.Component {
     event.preventDefault();
     if (!this.state.email && !this.state.password) {
       this.setState({
-        invalidEmail: "Email can't be empty!",
-        invalidPassword: "Password can't be empty!"
+        invalidEmail: `⚠︎ Email can't be empty!`,
+        invalidPassword: `⚠︎ Password can't be empty!`
       });
     } else if (!this.state.email && this.state.password) {
-      this.setState({ invalidEmail: "Email can't be empty!" });
+      this.setState({ invalidEmail: `⚠︎ Email can't be empty!` });
     } else if (this.state.email && !this.state.password) {
-      this.setState({ invalidPassword: "Password can't be empty!" });
+      this.setState({ invalidPassword: "⌽ Password can't be empty!" });
     } else {
       this.userLogin();
     }
