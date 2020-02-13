@@ -27,6 +27,7 @@ import Scores from "../components/Scores";
 import Score from "../components/Score";
 import PlayQuiz from "./PlayQuiz";
 import ScoreCard from "../components/ScoreCard";
+import Notfound404 from "../components/404";
 import ListQuizzes from "./ListQuizzes";
 
 class Home extends React.Component {
@@ -93,6 +94,9 @@ class Home extends React.Component {
         <Route exact path="/">
           <HomePage />
         </Route>
+        <Route>
+          <Notfound404 />
+        </Route>
       </>
     );
   };
@@ -105,11 +109,9 @@ class Home extends React.Component {
             <Profile user={this.props.user} isLogged={this.handleLogin} />
           </>
         </Route>
-
         <Route exact path="/questions">
           <PlayQuiz isAdmin={isAdmin} />
         </Route>
-
         <Route path="/questions/scorecard">
           <ScoreCard />
         </Route>
@@ -142,6 +144,11 @@ class Home extends React.Component {
             <HomePage />
           </>
         </Route>
+        {/* <Route path="*">
+          <div>
+            <center>Page Not Found!</center>
+          </div>
+        </Route> */}
         <Header isLoggedin={this.props.isLogged} isAdmin={isAdmin} />
       </>
     );

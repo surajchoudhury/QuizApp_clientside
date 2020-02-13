@@ -19,47 +19,7 @@ class Header extends React.Component {
   };
 
   publicHeader = () => {
-    return (
-      <>
-        <div className="home">
-          <Link
-            activeClassName="header_item_active"
-            className="navbar-item"
-            to="/"
-          >
-            QuizApp
-          </Link>
-        </div>
-
-        <div className="navbar-end">
-          <div className="navbar-item">
-            <div className="buttons">
-              <Link
-                activeClassName="header_item_active"
-                className="button is-primary"
-                to="/users/new"
-              >
-                <strong>Sign up</strong>
-              </Link>
-              <Link
-                activeClassName="header_item_active"
-                className="button is-light"
-                to="/users/login"
-              >
-                Login
-              </Link>
-              <Link
-                activeClassName="header_item_active"
-                className="button is-light my_admin_button"
-                to="/admins/login"
-              >
-                Admin
-              </Link>
-            </div>
-          </div>
-        </div>
-      </>
-    );
+    return <></>;
   };
 
   protectedHeader = isAdmin => {
