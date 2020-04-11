@@ -13,7 +13,7 @@ import {
   fetchQuestions,
   fetchQuestion,
   fetchScores,
-  fetchScore
+  fetchScore,
 } from "../actions";
 import Header from "../components/Header";
 import HomePage from "../components/HomePage";
@@ -37,7 +37,7 @@ class Home extends React.Component {
       quizId: null,
       loggedUser: null,
       isLogged: false,
-      quizzes: null
+      quizzes: null,
     };
   }
 
@@ -54,18 +54,18 @@ class Home extends React.Component {
     }
   }
 
-  updateState = quizset => {
+  updateState = (quizset) => {
     this.props.dispatch(fetchQuizsets());
     this.props.dispatch(fetchQuestions(quizset));
   };
-  getQuizId = id => {
+  getQuizId = (id) => {
     this.setState({ quizId: id }, () => this.props.dispatch(fetchQuestion(id)));
   };
   currentLoggedUser = () => {
     this.props.dispatch(fetchUser());
   };
 
-  handleLogin = isLogged => {
+  handleLogin = (isLogged) => {
     this.setState({ isLogged });
   };
 
@@ -101,7 +101,7 @@ class Home extends React.Component {
     );
   };
 
-  protectedRoutes = isAdmin => {
+  protectedRoutes = (isAdmin) => {
     return (
       <>
         <Route path="/user">
@@ -123,20 +123,14 @@ class Home extends React.Component {
         </Route>
 
         <Route path="/quizsets">
-          <>
-            <Quizset isAdmin={isAdmin} />
-          </>
+          <Quizset isAdmin={isAdmin} />
         </Route>
         <Route path="/quizzes/new">{isAdmin ? <NewQuiz /> : null}</Route>
         <Route path="/scores">
-          <>
-            <Scores />
-          </>
+          <Scores />
         </Route>
         <Route path="/score">
-          <>
-            <Score />
-          </>
+          <Score />
         </Route>
 
         <Route exact path="/">
@@ -180,7 +174,7 @@ function mapStateToProps({ quizzes, users, admins }) {
     quizsets: quizzes.quizsets,
     users,
     user: users.user,
-    admins
+    admins,
   };
 }
 

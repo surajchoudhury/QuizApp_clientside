@@ -6,7 +6,7 @@ const Notfound404 = () => {
   return (
     <center className="not_found_container">
       <figure className="not_found">
-        <img src="/images/404.svg" alt="" srcset="" />
+        <img src="/images/404.svg" alt="" srcSet="" />
       </figure>
       <Link to="/">
         <p className="back_to_home">
