@@ -6,11 +6,13 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 class PieChart extends Component {
   applyChart = (props) => {
     let data = [];
-    // var denseKeys = props.filter(
-    //   (item) => !Object.values(item).includes("Science")
-    // );
-    props.forEach((elm) => {
-      data.push({ y: elm.score, name: elm.quizset });
+    let sorted = props.sort((a,b) => b.score - a.score);
+    let s = new Set();
+    sorted.forEach((elm) => {
+      if(!s.has(elm.quizset)){
+        s.add(elm.quizset);
+        data.push({ y: elm.score, name: elm.quizset });
+      }
     });
     return data;
   };
@@ -44,9 +46,9 @@ class PieChart extends Component {
       },
       subtitles: [
         {
-          text: "71% Positive",
+          text: "Scores",
           verticalAlign: "center",
-          fontSize: 24,
+          fontSize: 28,
           dockInsidePlotArea: true,
         },
       ],
