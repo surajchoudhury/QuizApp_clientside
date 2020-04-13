@@ -19,34 +19,13 @@ class PieChart extends Component {
 
   render() {
     const options = {
-      // theme: "light",
-      // animationEnabled: true,
-      // exportFileName: "Personal Scores",
-      // exportEnabled: true,
-      // title: {
-      //   text: "Personal Scores",
-      // },
-
-      // data: [
-      //   {
-      //     type: "doughnut",
-      //     showInLegend: true,
-      //     legendText: "{label}",
-      //     toolTipContent: "{label}: <strong>{y}%</strong>",
-      //     indexLabel: "{y}%",
-      //     indexLabelPlacement: "outside",
-      //     dataPoints: this.applyChart(
-      //       this.props.score && this.props.score.score
-      //     ),
-      //   },
-      // ],
       animationEnabled: true,
       title: {
         text: "Personal Score",
       },
       subtitles: [
         {
-          text: "Scores",
+          text: "Points",
           verticalAlign: "center",
           fontSize: 28,
           dockInsidePlotArea: true,
@@ -57,15 +36,8 @@ class PieChart extends Component {
           type: "doughnut",
           showInLegend: true,
           indexLabel: "{name}: {y}",
-          yValueFormatString: "#,###'%'",
+          yValueFormatString: "#,### 'Pt'",
           dataPoints:
-            //  [
-            // 	{ name: "Unsatisfied", y: 5 },
-            // 	{ name: "Very Unsatisfied", y: 31 },
-            // 	{ name: "Very Satisfied", y: 40 },
-            // 	{ name: "Satisfied", y: 17 },
-            // 	{ name: "Neutral", y: 7 }
-            // ]
             this.applyChart(this.props.score && this.props.score.score),
         },
       ],
